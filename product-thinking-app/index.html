@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--HEAD-START-->
+<title>Problem Quest</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jersey+15&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css">
+<!--HEAD-END-->
+</head>
+<body>
+<!--BODY-START-->
+<div id="app">
+  <header id="hud">
+    <div class="hud-map"><span class="hud-eyebrow">Problem Quest</span><strong id="mapName">Crossroads Camp</strong></div>
+    <div class="hud-level" aria-live="polite">
+      <span class="lv">Lv <b id="lvl">1</b></span>
+      <span class="lv-title" id="lvlTitle">Request Taker</span>
+      <div class="bar exp" role="img" aria-label="Experience"><i id="expFill"></i></div>
+    </div>
+    <div class="hud-btns">
+      <button type="button" class="chip" id="btnLog">Quests</button>
+      <button type="button" class="chip" id="btnPet">Pet<span class="dot" aria-hidden="true"></span></button>
+      <button type="button" class="chip" id="btnMute" aria-label="Sound on">♪<span class="lbl"> On</span></button>
+    </div>
+  </header>
+
+  <div id="stage">
+    <canvas id="game" aria-label="Game world"></canvas>
+    <button type="button" id="prompt" hidden></button>
+    <div id="toasts" aria-live="polite"></div>
+
+    <section id="dialog" class="sheet" hidden aria-live="polite">
+      <div class="dlg-head">
+        <span class="who" id="dlgWho"></span>
+        <span class="hearts" id="dlgHearts" hidden></span>
+        <button type="button" class="x" id="dlgClose" aria-label="Leave">✕</button>
+      </div>
+      <div class="bossbar" id="dlgBoss" hidden>
+        <span>Boss HP</span><div class="bar hp"><i id="dlgBossFill"></i></div>
+      </div>
+      <div id="dlgBody"></div>
+    </section>
+
+    <section id="title" class="overlay">
+      <div class="card title-card">
+        <p class="eyebrow">Product thinking · Lessons 1 to 3</p>
+        <h1>Problem Quest</h1>
+        <p class="lede">Requests arrive dressed as solutions. Travel three lands, help the locals find the real problem, and beat a boss in each.</p>
+        <ul class="lands">
+          <li><b>Disguise Village</b><span>Spot solutions in disguise</span></li>
+          <li><b>Whywood Forest</b><span>Dig with the Five Whys</span></li>
+          <li><b>Four-C Citadel</b><span>Write a 4Cs problem statement</span></li>
+        </ul>
+        <p class="lede pet-note">You won’t travel alone. You carry an egg: right answers earn berries to feed what hatches, and it grows each time you beat a boss.</p>
+        <div class="keys">
+          <div><kbd>←</kbd><kbd>→</kbd> or <kbd>A</kbd><kbd>D</kbd><span>Walk</span></div>
+          <div><kbd>Space</kbd> or <kbd>↑</kbd><span>Jump</span></div>
+          <div><kbd>E</kbd> or <kbd>Enter</kbd><span>Talk, enter portals</span></div>
+          <div><kbd>1</kbd>–<kbd>5</kbd><span>Pick an answer</span></div>
+        </div>
+        <p class="touch-note">On a phone, use the buttons under the game.</p>
+        <div class="row">
+          <button type="button" class="btn primary" id="btnStart">Start the quest</button>
+          <button type="button" class="btn" id="btnFresh" hidden>Start over</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="log" class="overlay" hidden>
+      <div class="card">
+        <div class="card-head"><h2>Quest log</h2><button type="button" class="x" id="logClose" aria-label="Close">✕</button></div>
+        <div id="logBody"></div>
+        <div class="row">
+          <button type="button" class="btn" id="btnReset">Erase progress</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="cert" class="overlay" hidden>
+      <div class="card cert-card">
+        <p class="eyebrow">Quest complete</p>
+        <h2>Problem Thinker</h2>
+        <p id="certStats" class="lede"></p>
+        <ol class="recap">
+          <li><b>Turn the request into a problem.</b> Who are our users? What are they trying to do? What’s getting in their way?</li>
+          <li><b>Ask why, five times.</b> Go from the symptom to a cause close to the root that you can act on.</li>
+          <li><b>Write the 4Cs.</b> Clarity, Consequence, Cause, Confirmation. Four dimensions, one statement, no solutions yet.</li>
+        </ol>
+        <p class="work"><b>Try it at work this week.</b> Next time a request arrives as a solution, ask the three questions before discussing the solution.</p>
+        <p class="links" id="certLinks"></p>
+        <div class="row"><button type="button" class="btn primary" id="certClose">Back to camp</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="pad" aria-label="Touch controls">
+    <div class="pad-side">
+      <button type="button" data-key="left" aria-label="Walk left">◀</button>
+      <button type="button" data-key="right" aria-label="Walk right">▶</button>
+    </div>
+    <div class="pad-side">
+      <button type="button" data-key="act" class="act" aria-label="Talk">Talk</button>
+      <button type="button" data-key="jump" class="jump" aria-label="Jump">Jump</button>
+    </div>
+  </div>
+</div>
+<script src="content.js"></script>
+<script src="engine.js"></script>
+<script src="game.js"></script>
+<!--BODY-END-->
+</body>
+</html>
