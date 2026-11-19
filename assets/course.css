@@ -1,0 +1,161 @@
+/* Product Thinking course — shared stylesheet.
+   Layout: one reading column (~65ch) with Tufte-style margin notes that
+   fold inline below 1100px. Practice blocks sit on a tinted "worksheet" ground. */
+
+:root {
+  --paper: #f6f8f7;
+  --ink: #17242b;
+  --ink-soft: #4a5a62;
+  --rule: #d5dedb;
+  --sheet: #e9efed;
+  --accent: #0e6b62;        /* problem / correct */
+  --accent-ink: #ffffff;
+  --trap: #8c3a63;          /* solution-in-disguise / incorrect */
+  --trap-bg: #f5e8ee;
+  --ok-bg: #e0f0ec;
+  --focus: #1f5fd1;
+
+  --font-body: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-ui: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3rem;
+  --step-2: 1.7rem;
+  --step-3: 2.4rem;
+  --measure: 40rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121a1e; --ink: #e3ebe8; --ink-soft: #9fb0b3; --rule: #2c3a3f;
+    --sheet: #1a2529; --accent: #4fc2b2; --accent-ink: #0b1a17;
+    --trap: #e08ab5; --trap-bg: #2e1c26; --ok-bg: #16302c; --focus: #8fb4ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121a1e; --ink: #e3ebe8; --ink-soft: #9fb0b3; --rule: #2c3a3f;
+  --sheet: #1a2529; --accent: #4fc2b2; --accent-ink: #0b1a17;
+  --trap: #e08ab5; --trap-bg: #2e1c26; --ok-bg: #16302c; --focus: #8fb4ff;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  margin: 0;
+}
+.page {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-block: 3rem 5rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.col { max-width: var(--measure); }
+@media (min-width: 1100px) { .page { padding-left: max(4rem, env(safe-area-inset-left, 0px)); } }
+
+h1, h2, h3 { font-family: var(--font-ui); text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: var(--step-3); font-weight: 600; letter-spacing: -0.015em; }
+h2 { font-size: var(--step-2); font-weight: 600; margin-top: 3rem; }
+h3 { font-size: var(--step-1); font-weight: 600; margin-top: 2rem; }
+p { margin: 0.9rem 0; }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:focus-visible, button:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+strong { font-weight: 600; }
+
+.eyebrow {
+  font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-soft); display: flex; gap: 0.75rem; flex-wrap: wrap;
+}
+.dek { font-size: var(--step-1); color: var(--ink-soft); line-height: 1.45; margin-top: 1rem; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+/* Margin notes (Tufte). Inline, smaller, below 1100px. */
+.note {
+  font-family: var(--font-ui); font-size: var(--step--1); line-height: 1.45; color: var(--ink-soft);
+  display: block; border-left: 2px solid var(--rule); padding-left: 0.75rem; margin: 0.75rem 0;
+}
+@media (min-width: 1100px) {
+  .has-notes { position: relative; }
+  .note { float: right; clear: right; width: 15rem; margin-right: -18rem; margin-top: 0.3rem; }
+}
+
+blockquote.source {
+  margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 3px solid var(--accent);
+  font-size: var(--step-1); line-height: 1.4;
+}
+blockquote.source cite { display: block; font-family: var(--font-ui); font-size: var(--step--1); font-style: normal; color: var(--ink-soft); margin-top: 0.4rem; }
+
+/* Two-column "what we hear / real issue" table */
+.pairs { width: 100%; border-collapse: collapse; font-size: var(--step-0); margin: 1.25rem 0; }
+.pairs-wrap { overflow-x: auto; }
+.pairs th { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); text-align: left; font-weight: 500; padding: 0.4rem 0.75rem 0.4rem 0; border-bottom: 1px solid var(--rule); }
+.pairs td { padding: 0.65rem 0.75rem 0.65rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.pairs td:first-child { color: var(--trap); font-style: italic; width: 38%; }
+
+/* The three questions */
+.questions { counter-reset: q; list-style: none; padding: 0; margin: 1.25rem 0; display: grid; gap: 0.6rem; }
+.questions li { counter-increment: q; display: grid; grid-template-columns: 2rem 1fr; align-items: baseline; font-size: var(--step-1); }
+.questions li::before { content: counter(q); font-family: var(--font-mono); font-size: var(--step-0); color: var(--accent); }
+
+/* Worksheet blocks for practice */
+.sheet { background: var(--sheet); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0; }
+.sheet > h3:first-child { margin-top: 0; }
+.sheet-label { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 600; }
+
+/* Classification quiz */
+.cq-item { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.cq-item:first-of-type { border-top: 0; }
+.cq-stmt { font-size: var(--step-0); margin: 0 0 0.6rem; }
+.cq-stmt::before { content: "\201C"; } .cq-stmt::after { content: "\201D"; }
+.cq-choices { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn {
+  font-family: var(--font-ui); font-size: var(--step--1); font-weight: 500; cursor: pointer;
+  border: 1px solid var(--ink-soft); background: transparent; color: var(--ink);
+  padding: 0.45rem 0.9rem; border-radius: 4px; min-width: 9.5rem;
+}
+.btn:hover:not(:disabled) { border-color: var(--ink); background: var(--paper); }
+.btn:disabled { cursor: default; opacity: 0.55; }
+.btn.picked { opacity: 1; border-width: 2px; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.feedback { font-family: var(--font-ui); font-size: var(--step--1); line-height: 1.5; margin-top: 0.6rem; padding: 0.6rem 0.8rem; border-radius: 4px; }
+.feedback.right { background: var(--ok-bg); }
+.feedback.wrong { background: var(--trap-bg); }
+.feedback b { font-weight: 600; }
+.score { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-soft); font-variant-numeric: tabular-nums; margin-top: 0.5rem; }
+
+/* Reframe exercise */
+.field { display: grid; gap: 0.3rem; margin: 0.9rem 0; }
+.field label { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; }
+.field textarea {
+  font-family: var(--font-body); font-size: var(--step-0); color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 4px; padding: 0.55rem 0.7rem; min-height: 3.2rem; resize: vertical; width: 100%;
+}
+.checks { list-style: none; padding: 0; margin: 0.75rem 0; font-family: var(--font-ui); font-size: var(--step--1); display: grid; gap: 0.35rem; }
+.checks li::before { display: inline-block; width: 1.4rem; font-family: var(--font-mono); }
+.checks li.pass::before { content: "✓"; color: var(--accent); }
+.checks li.fail::before { content: "✗"; color: var(--trap); }
+.flag { color: var(--trap); font-weight: 600; }
+
+details.reveal { margin: 1rem 0; border-top: 1px solid var(--rule); padding-top: 0.75rem; }
+details.reveal summary { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; cursor: pointer; color: var(--accent); }
+details.reveal[open] summary { margin-bottom: 0.5rem; }
+
+.callout { font-family: var(--font-ui); font-size: var(--step--1); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+.callout strong { display: block; font-size: var(--step-0); margin-bottom: 0.25rem; }
+.nextprev { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: var(--font-ui); font-size: var(--step--1); }
+
+@media (prefers-reduced-motion: no-preference) { .feedback { animation: fade 160ms ease-out; } }
+@keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
+
+@media print {
+  body { background: #fff; color: #000; }
+  .sheet { background: none; border: 1px solid #999; }
+  .note { float: none; width: auto; margin: 0.5rem 0; }
+}

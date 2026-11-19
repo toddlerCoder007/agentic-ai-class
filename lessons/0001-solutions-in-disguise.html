@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Solutions in Disguise</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+<main class="page">
+<article class="col has-notes">
+
+  <div class="eyebrow"><span>Product Thinking</span><span>Lesson 1</span><span>About 12 minutes</span></div>
+  <h1>Solutions in disguise</h1>
+  <p class="dek">Most requests at work arrive as a solution: “we need a chatbot”. Your first move as a product thinker is to turn the request back into the problem behind it. This lesson teaches that move.</p>
+
+  <h2>Why start here</h2>
+  <span class="note">Source: IDG, <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking1/">Module 1: Understanding the Problem</a>.</span>
+  <blockquote class="source">“Great digital products start with problems, not solutions.”
+    <cite>Institute of Digital Government, Product Thinking, Module 1</cite>
+  </blockquote>
+  <p>IDG’s point is that a project can be well run and still fail, because it was solving the wrong problem. The team ships on time and on budget, and nobody’s life gets better.</p>
+  <p>The usual cause is that the project started from a solution. IDG lists requests it hears all the time. Each one sounds like a problem but actually names something to build or buy:</p>
+
+  <span class="note">These four pairs are paraphrased from IDG’s “common trap” graphic in Module 1.</span>
+  <div class="pairs-wrap">
+    <table class="pairs">
+      <thead><tr><th>What we hear</th><th>The problem underneath</th></tr></thead>
+      <tbody>
+        <tr><td>We need more AI.</td><td>Officers can’t make decisions from large, messy datasets.</td></tr>
+        <tr><td>We need a superapp.</td><td>Citizens can’t get to services efficiently across many platforms.</td></tr>
+        <tr><td>We don’t have a CRM.</td><td>Clunky processes cause long waits for citizens.</td></tr>
+        <tr><td>Our product is end of life.</td><td>Citizens and officers are about to lose access to critical services.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The right-hand column can be solved in many ways. The left-hand column has already picked one, often before anyone checked whether it fits.</p>
+
+  <h2>The test: three questions</h2>
+  <p>IDG’s first principle is to focus on the problem, not the solution. It comes with three questions. A real problem statement answers all three:</p>
+  <ol class="questions">
+    <li>Who are our users?</li>
+    <li>What are they trying to do?</li>
+    <li>What’s getting in their way?</li>
+  </ol>
+  <span class="note">IDG’s other two principles, “chase outcomes, not outputs” and “integrate policy, ops and tech”, are covered in later lessons.</span>
+  <p>A <strong>solution in disguise</strong> skips all three and names a thing instead: an app, a bot, a system or a migration. A tell-tale sign is that you could delete the people from the sentence and it would still make sense.</p>
+  <p>The test does not ban a statement that mentions users. “Build an app so citizens can pay fines” has users in it, but it still decides what to build before saying what is getting in the citizens’ way.</p>
+
+  <span class="note">IDG cites Grab (safer, easier taxi booking), Amazon (books only) and Netflix (cheaper, more reliable DVD rentals) as companies that began this way.</span>
+  <p>A good problem is also <strong>narrow</strong>. IDG points to companies that started by solving one specific problem for one defined group, and expanded only after that worked.</p>
+
+  <section class="sheet" aria-labelledby="p1">
+    <p class="sheet-label">Practice 1 · Spot the disguise</p>
+    <h3 id="p1">Problem or solution?</h3>
+    <p>Here are eight things a colleague might say. Label each one. You get feedback as soon as you pick.</p>
+    <div id="quiz1"></div>
+  </section>
+
+  <section class="sheet" aria-labelledby="p2">
+    <p class="sheet-label">Practice 2 · Reframe it</p>
+    <h3 id="p2">Turn a request into a problem</h3>
+    <p>Your director says: <em>“We need a WhatsApp bot so residents can book clinic appointments.”</em> Pretend you have asked around, and found out the clinic phone line is only staffed 9 to 5. Most callers are working adults, and they can’t get through during office hours.</p>
+    <p>Answer the three questions. Don’t name anything to build.</p>
+    <form id="reframe" novalidate>
+      <div class="field"><label for="rf-who">1 · Who are the users?</label><textarea id="rf-who" rows="2"></textarea></div>
+      <div class="field"><label for="rf-goal">2 · What are they trying to do?</label><textarea id="rf-goal" rows="2"></textarea></div>
+      <div class="field"><label for="rf-obs">3 · What’s getting in their way?</label><textarea id="rf-obs" rows="2"></textarea></div>
+      <button class="btn primary" type="submit" id="rf-check">Check my reframe</button>
+    </form>
+    <ul class="checks" id="rf-results" aria-live="polite"></ul>
+    <details class="reveal" id="rf-model">
+      <summary>Show one good answer</summary>
+      <p><strong>Who:</strong> working-age residents who need a clinic appointment.<br>
+         <strong>Trying to:</strong> book a slot that fits around their working hours.<br>
+         <strong>In the way:</strong> they can only book by phone, the line is staffed 9 to 5, and those are the hours they’re at work.</p>
+      <p>Notice that a WhatsApp bot is one fix. Longer phone hours, online booking, or walk-in evening slots would also address it. The problem statement leaves those options open. The original request ruled them out.</p>
+    </details>
+  </section>
+
+  <h2>Recall it</h2>
+  <p>Without scrolling up, answer this in your head or on paper. Then check.</p>
+  <details class="reveal">
+    <summary>What are the three questions a problem statement must answer?</summary>
+    <p>Who are our users? What are they trying to do? What’s getting in their way?</p>
+  </details>
+  <details class="reveal">
+    <summary>What is the giveaway that a statement is a solution in disguise?</summary>
+    <p>It names a thing to build or buy (an app, AI, a system) before it says who is struggling and why. Often you can remove the people from the sentence and it still reads fine.</p>
+  </details>
+
+  <div class="callout">
+    <strong>Try it at work this week</strong>
+    Next time someone brings you a request phrased as a solution, ask the three questions before discussing the solution. Write down what you hear and bring it to your next session. We can turn it into a full problem statement together.
+  </div>
+
+  <div class="callout">
+    <strong>Stuck or curious? Ask your teacher.</strong>
+    Bring any follow-up question to Claude in this workspace. For example: “Is ‘we need to digitalise this form’ a solution in disguise?” or “How do I push back on my director without sounding difficult?”
+  </div>
+
+  <h2>Go to the source</h2>
+  <p><strong>Primary source:</strong> <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking1/">IDG Product Thinking, Module 1: Understanding the Problem</a>, with its short video <a href="https://youtu.be/DqGP6BvyRdk">Understanding the Problem to be Solved</a>. The full seven-module pathway is at <a href="https://www.idg.gov.sg/product-thinking/">idg.gov.sg/product-thinking</a>.</p>
+  <p><strong>Quick reference:</strong> <a href="../reference/product-thinking-cheatsheet.html">Product thinking cheat sheet</a> (keeps growing with each lesson).</p>
+
+  <hr>
+  <nav class="nextprev" aria-label="Lessons">
+    <span>Lesson 1 of the pathway</span>
+    <span>Next: Lesson 2 · Start with the Whys (Five Whys root cause analysis)</span>
+  </nav>
+</article>
+</main>
+
+<script src="../assets/components.js"></script>
+<script>
+(function () {
+  PT.classifyQuiz(document.getElementById("quiz1"), {
+    labels: ["Problem stated", "Solution named"],
+    items: [
+      { text: "We need a chatbot for the hotline.", answer: 1,
+        why: "It names a thing to build. Who is calling, what are they trying to do, and what goes wrong? None of that is here." },
+      { text: "Residents renewing a permit wait three weeks, because every application is checked by hand twice.", answer: 0,
+        why: "It names who (residents renewing a permit), the goal (a renewal), and what gets in the way (three weeks of double manual checks)." },
+      { text: "Front-desk officers re-type the same applicant details into four systems, so each walk-in takes 25 minutes.", answer: 0,
+        why: "It mentions systems, but only to describe the obstacle. It doesn't prescribe a fix. Users, goal and blocker are all there." },
+      { text: "Let's move the case management system to the cloud.", answer: 1,
+        why: "This is a migration. It might be the right call, but it doesn't say whose problem it solves." },
+      { text: "We should build a mobile app so citizens can pay their fines.", answer: 1,
+        why: "This is a tricky one. It mentions users, but the app is already decided. What stops citizens paying fines today?" },
+      { text: "Small business owners give up on the grant application at the eligibility step, because they can't tell whether they qualify.", answer: 0,
+        why: "A specific group, a clear goal, and a precise point where they get stuck. You could fix this many different ways." },
+      { text: "Our dashboard needs AI-generated insights.", answer: 1,
+        why: "This is the “we need more AI” trap. Insights for whom, to make what decision?" },
+      { text: "Duty officers miss urgent cases because new and follow-up emails look identical in the shared inbox.", answer: 0,
+        why: "It names who (duty officers), what they need (to spot urgent cases), and what gets in the way (emails that look the same)." }
+    ]
+  });
+
+  var form = document.getElementById("reframe");
+  var out = document.getElementById("rf-results");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var checks = PT.reframeCheck({
+      who: document.getElementById("rf-who").value,
+      goal: document.getElementById("rf-goal").value,
+      obstacle: document.getElementById("rf-obs").value
+    });
+    out.innerHTML = "";
+    checks.forEach(function (c) {
+      var li = document.createElement("li");
+      li.className = c.ok ? "pass" : (c.bonus ? "" : "fail");
+      if (!c.ok && c.bonus) li.style.paddingLeft = "1.4rem";
+      li.textContent = c.text;
+      out.appendChild(li);
+    });
+    var core = checks.filter(function (c) { return !c.bonus; });
+    if (core.every(function (c) { return c.ok; })) document.getElementById("rf-model").open = true;
+  });
+})();
+</script>
+</body>
+</html>
