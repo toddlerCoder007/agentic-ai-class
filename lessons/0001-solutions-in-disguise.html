@@ -110,7 +110,7 @@
   <hr>
   <nav class="nextprev" aria-label="Lessons">
     <span>Lesson 1 of the pathway</span>
-    <span>Next: Lesson 2 · Start with the Whys (Five Whys root cause analysis)</span>
+    <a href="../lessons/0002-start-with-the-whys.html">Lesson 2 · Start with the whys →</a>
   </nav>
 </article>
 </main>
@@ -149,16 +149,7 @@
       goal: document.getElementById("rf-goal").value,
       obstacle: document.getElementById("rf-obs").value
     });
-    out.innerHTML = "";
-    checks.forEach(function (c) {
-      var li = document.createElement("li");
-      li.className = c.ok ? "pass" : (c.bonus ? "" : "fail");
-      if (!c.ok && c.bonus) li.style.paddingLeft = "1.4rem";
-      li.textContent = c.text;
-      out.appendChild(li);
-    });
-    var core = checks.filter(function (c) { return !c.bonus; });
-    if (core.every(function (c) { return c.ok; })) document.getElementById("rf-model").open = true;
+    if (PT.renderChecks(out, checks)) document.getElementById("rf-model").open = true;
   });
 })();
 </script>

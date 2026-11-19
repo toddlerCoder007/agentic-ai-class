@@ -342,12 +342,22 @@ body.touch .keys { display: none; }
 (function (root) {
   "use strict";
 
+  /* url: the claude.ai artifact (checked against build/published.json by build.py).
+     page: the same lesson as a sibling page, used when the game runs from the course site
+     (GitHub Pages or a local server), where this file is loaded with <script src>. The
+     single-file artifact build inlines this script, so it keeps the artifact links. */
   var LESSONS = [
-    { n: 1, title: "Solutions in disguise", url: "https://claude.ai/artifact/SLMDRewweQV5ttsDJBdD9Z" },
-    { n: 2, title: "Start with the whys", url: "https://claude.ai/artifact/Bfv9dpHAEv9vc1Z45yzMaY" },
-    { n: 3, title: "The 4Cs problem statement", url: "https://claude.ai/artifact/K1rJFoduprPSPUKh5Erakc" }
+    { n: 1, title: "Solutions in disguise", url: "https://claude.ai/artifact/SLMDRewweQV5ttsDJBdD9Z", page: "../lessons/0001-solutions-in-disguise.html" },
+    { n: 2, title: "Start with the whys", url: "https://claude.ai/artifact/Bfv9dpHAEv9vc1Z45yzMaY", page: "../lessons/0002-start-with-the-whys.html" },
+    { n: 3, title: "The 4Cs problem statement", url: "https://claude.ai/artifact/K1rJFoduprPSPUKh5Erakc", page: "../lessons/0003-four-cs-problem-statement.html" }
   ];
   var CHEATSHEET = "https://claude.ai/artifact/Ge3LvtWpUUEvc4tXtdiXhR";
+  var CHEATSHEET_PAGE = "../reference/product-thinking-cheatsheet.html";
+  var onSite = typeof document !== "undefined" && !!(document.currentScript && document.currentScript.src);
+  if (onSite) {
+    LESSONS.forEach(function (L) { L.url = L.page; });
+    CHEATSHEET = CHEATSHEET_PAGE;
+  }
 
   var PS = ["Problem stated", "Solution named"];
   var FIX = ["Fix this level", "Look elsewhere"];

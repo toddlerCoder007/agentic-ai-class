@@ -1,0 +1,254 @@
+<title>Product Thinking Cheat Sheet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Product Thinking course — shared stylesheet.
+   Layout: one reading column (~65ch) with Tufte-style margin notes that
+   fold inline below 1100px. Practice blocks sit on a tinted "worksheet" ground. */
+
+:root {
+  --paper: #f6f8f7;
+  --ink: #17242b;
+  --ink-soft: #4a5a62;
+  --rule: #d5dedb;
+  --sheet: #e9efed;
+  --accent: #0e6b62;        /* problem / correct */
+  --accent-ink: #ffffff;
+  --trap: #8c3a63;          /* solution-in-disguise / incorrect */
+  --trap-bg: #f5e8ee;
+  --ok-bg: #e0f0ec;
+  --focus: #1f5fd1;
+
+  --font-body: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-ui: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3rem;
+  --step-2: 1.7rem;
+  --step-3: 2.4rem;
+  --measure: 40rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121a1e; --ink: #e3ebe8; --ink-soft: #9fb0b3; --rule: #2c3a3f;
+    --sheet: #1a2529; --accent: #4fc2b2; --accent-ink: #0b1a17;
+    --trap: #e08ab5; --trap-bg: #2e1c26; --ok-bg: #16302c; --focus: #8fb4ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121a1e; --ink: #e3ebe8; --ink-soft: #9fb0b3; --rule: #2c3a3f;
+  --sheet: #1a2529; --accent: #4fc2b2; --accent-ink: #0b1a17;
+  --trap: #e08ab5; --trap-bg: #2e1c26; --ok-bg: #16302c; --focus: #8fb4ff;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  margin: 0;
+}
+.page {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-block: 3rem 5rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.col { max-width: var(--measure); }
+@media (min-width: 1100px) { .page { padding-left: max(4rem, env(safe-area-inset-left, 0px)); } }
+
+h1, h2, h3 { font-family: var(--font-ui); text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: var(--step-3); font-weight: 600; letter-spacing: -0.015em; }
+h2 { font-size: var(--step-2); font-weight: 600; margin-top: 3rem; }
+h3 { font-size: var(--step-1); font-weight: 600; margin-top: 2rem; }
+p { margin: 0.9rem 0; }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:focus-visible, button:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+strong { font-weight: 600; }
+
+.eyebrow {
+  font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-soft); display: flex; gap: 0.75rem; flex-wrap: wrap;
+}
+.dek { font-size: var(--step-1); color: var(--ink-soft); line-height: 1.45; margin-top: 1rem; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+/* Margin notes (Tufte). Inline, smaller, below 1100px. */
+.note {
+  font-family: var(--font-ui); font-size: var(--step--1); line-height: 1.45; color: var(--ink-soft);
+  display: block; border-left: 2px solid var(--rule); padding-left: 0.75rem; margin: 0.75rem 0;
+}
+@media (min-width: 1100px) {
+  .has-notes { position: relative; }
+  .note { float: right; clear: right; width: 15rem; margin-right: -18rem; margin-top: 0.3rem; }
+}
+
+blockquote.source {
+  margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 3px solid var(--accent);
+  font-size: var(--step-1); line-height: 1.4;
+}
+blockquote.source cite { display: block; font-family: var(--font-ui); font-size: var(--step--1); font-style: normal; color: var(--ink-soft); margin-top: 0.4rem; }
+
+/* Two-column "what we hear / real issue" table */
+.pairs { width: 100%; border-collapse: collapse; font-size: var(--step-0); margin: 1.25rem 0; }
+.pairs-wrap { overflow-x: auto; }
+.pairs th { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); text-align: left; font-weight: 500; padding: 0.4rem 0.75rem 0.4rem 0; border-bottom: 1px solid var(--rule); }
+.pairs td { padding: 0.65rem 0.75rem 0.65rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.pairs td:first-child { color: var(--trap); font-style: italic; width: 38%; }
+
+/* The three questions */
+.questions { counter-reset: q; list-style: none; padding: 0; margin: 1.25rem 0; display: grid; gap: 0.6rem; }
+.questions li { counter-increment: q; display: grid; grid-template-columns: 2rem 1fr; align-items: baseline; font-size: var(--step-1); }
+.questions li::before { content: counter(q); font-family: var(--font-mono); font-size: var(--step-0); color: var(--accent); }
+
+/* Worksheet blocks for practice */
+.sheet { background: var(--sheet); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0; }
+.sheet > h3:first-child { margin-top: 0; }
+.sheet-label { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 600; }
+
+/* Classification quiz */
+.cq-item { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.cq-item:first-of-type { border-top: 0; }
+.cq-stmt { font-size: var(--step-0); margin: 0 0 0.6rem; }
+.cq-stmt::before { content: "\201C"; } .cq-stmt::after { content: "\201D"; }
+.cq-choices { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn {
+  font-family: var(--font-ui); font-size: var(--step--1); font-weight: 500; cursor: pointer;
+  border: 1px solid var(--ink-soft); background: transparent; color: var(--ink);
+  padding: 0.45rem 0.9rem; border-radius: 4px; min-width: 9.5rem;
+}
+.btn:hover:not(:disabled) { border-color: var(--ink); background: var(--paper); }
+.btn:disabled { cursor: default; opacity: 0.55; }
+.btn.picked { opacity: 1; border-width: 2px; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.feedback { font-family: var(--font-ui); font-size: var(--step--1); line-height: 1.5; margin-top: 0.6rem; padding: 0.6rem 0.8rem; border-radius: 4px; }
+.feedback.right { background: var(--ok-bg); }
+.feedback.wrong { background: var(--trap-bg); }
+.feedback b { font-weight: 600; }
+.score { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-soft); font-variant-numeric: tabular-nums; margin-top: 0.5rem; }
+
+/* Reframe exercise */
+.field { display: grid; gap: 0.3rem; margin: 0.9rem 0; }
+.field label { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; }
+.field textarea {
+  font-family: var(--font-body); font-size: var(--step-0); color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 4px; padding: 0.55rem 0.7rem; min-height: 3.2rem; resize: vertical; width: 100%;
+}
+.checks { list-style: none; padding: 0; margin: 0.75rem 0; font-family: var(--font-ui); font-size: var(--step--1); display: grid; gap: 0.35rem; }
+.checks li::before { display: inline-block; width: 1.4rem; font-family: var(--font-mono); }
+.checks li.pass::before { content: "✓"; color: var(--accent); }
+.checks li.fail::before { content: "✗"; color: var(--trap); }
+.flag { color: var(--trap); font-weight: 600; }
+
+/* Why-chain (Five Whys): a vertical rail with nodes. .chain is the interactive one, .why-static the worked example. */
+.chain, .why-static { list-style: none; padding: 0 0 0 1.4rem; position: relative; display: grid; }
+.chain::before, .why-static::before { content: ""; position: absolute; left: 0.45rem; top: 0.4rem; bottom: 0.4rem; width: 2px; background: var(--rule); }
+.chain-item::before, .why-static li::before { content: ""; position: absolute; left: -1.2rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--accent); }
+.chain { margin: 0.5rem 0; gap: 0.45rem; }
+.chain-item { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 0.5rem 0.6rem 0.5rem 0.8rem; }
+.chain-item::before { top: 50%; margin-top: -0.3rem; }
+.chain-item.ok { border-color: var(--accent); }
+.chain-item.bad { border-color: var(--trap); background: var(--trap-bg); }
+.chain-text { min-width: 0; }
+.chain-ctrls { display: flex; gap: 0.25rem; flex-shrink: 0; }
+.mini { font-family: var(--font-mono); width: 2rem; height: 2rem; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); border-radius: 4px; cursor: pointer; }
+.mini:disabled { opacity: 0.3; cursor: default; }
+.chain-end { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); margin: 0.5rem 0; }
+.why-static { margin: 1rem 0; gap: 0.5rem; }
+.why-static li { position: relative; }
+.why-static li::before { top: 0.55em; }
+.why-static li span { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 0.5rem; }
+.why-static li.fix { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; color: var(--accent); }
+.why-static li.fix::before { background: none; }
+
+/* 4Cs grid */
+.cs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+.cs-cell { border-top: 3px solid var(--accent); background: var(--sheet); padding: 0.8rem 1rem; border-radius: 0 0 4px 4px; min-width: 0; }
+.cs-cell h4 { font-family: var(--font-ui); font-size: var(--step-0); margin: 0 0 0.3rem; }
+.cs-cell p { margin: 0; font-size: var(--step--1); font-family: var(--font-ui); color: var(--ink-soft); }
+.factsheet { font-family: var(--font-ui); font-size: var(--step--1); background: var(--paper); border: 1px dashed var(--rule); border-radius: 4px; padding: 0.75rem 1rem; }
+.factsheet ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+
+details.reveal { margin: 1rem 0; border-top: 1px solid var(--rule); padding-top: 0.75rem; }
+details.reveal summary { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; cursor: pointer; color: var(--accent); }
+details.reveal[open] summary { margin-bottom: 0.5rem; }
+
+.callout { font-family: var(--font-ui); font-size: var(--step--1); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+.callout strong { display: block; font-size: var(--step-0); margin-bottom: 0.25rem; }
+.nextprev { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: var(--font-ui); font-size: var(--step--1); }
+
+@media (prefers-reduced-motion: no-preference) { .feedback { animation: fade 160ms ease-out; } }
+@keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
+
+@media print {
+  body { background: #fff; color: #000; }
+  .sheet { background: none; border: 1px solid #999; }
+  .note { float: none; width: auto; margin: 0.5rem 0; }
+}
+</style>
+<main class="page">
+<article class="col">
+  <div class="eyebrow"><span>Product Thinking</span><span>Reference</span><span>Updated after Lesson 3</span></div>
+  <h1>Product thinking cheat sheet</h1>
+  <p class="dek">The short version of each lesson, for when you’re in a meeting. Based on the <a href="https://www.idg.gov.sg/product-thinking/">IDG Product Thinking pathway</a>.</p>
+
+  <h2>IDG’s three principles</h2>
+  <ol class="questions">
+    <li>Focus on the problem, not the solution.</li>
+    <li>Chase outcomes, not outputs.</li>
+    <li>Integrate policy, ops and tech.</li>
+  </ol>
+
+  <h2>Is it a problem? Ask three questions</h2>
+  <p>From <a href="https://claude.ai/artifact/SLMDRewweQV5ttsDJBdD9Z">Lesson 1: Solutions in disguise</a>.</p>
+  <ol class="questions">
+    <li>Who are our users?</li>
+    <li>What are they trying to do?</li>
+    <li>What’s getting in their way?</li>
+  </ol>
+  <div class="sheet">
+    <p class="sheet-label">Signs of a solution in disguise</p>
+    <ul>
+      <li>It names a thing to build or buy: an app, AI, a bot, a system, a migration.</li>
+      <li>You can remove the people and the sentence still makes sense.</li>
+      <li>It mentions users but has already chosen the fix (“an app so citizens can…”).</li>
+    </ul>
+    <p class="sheet-label">The move</p>
+    <p>Before discussing the solution, ask the three questions. Then write the answers down without naming anything to build. Keep it narrow: one group, one problem.</p>
+  </div>
+
+  <h2>Five Whys: from symptom to cause</h2>
+  <p>From <a href="https://claude.ai/artifact/Bfv9dpHAEv9vc1Z45yzMaY">Lesson 2: Start with the whys</a>.</p>
+  <div class="sheet">
+    <p class="sheet-label">The move</p>
+    <p>Start with the symptom. Ask “why?”, then ask “why?” about the answer, five times. Each answer should start with “because…”, never “we should…”.</p>
+    <p class="sheet-label">Choosing the level to fix</p>
+    <ul>
+      <li><strong>Aim for</strong> a cause close to the root that you can act on within your timeline and resources.</li>
+      <li><strong>Avoid</strong> fixing symptoms, and causes outside your sphere of influence.</li>
+      <li>Problems rarely have one root cause, so pick the best level for your team.</li>
+    </ul>
+  </div>
+
+  <h2>The 4Cs problem statement</h2>
+  <p>From <a href="https://claude.ai/artifact/K1rJFoduprPSPUKh5Erakc">Lesson 3: The 4Cs problem statement</a>. Four dimensions, one statement, no solutions yet.</p>
+  <div class="cs-grid">
+    <div class="cs-cell"><h4>Clarity</h4><p>Who is affected, doing what, what’s broken, and how badly?</p></div>
+    <div class="cs-cell"><h4>Consequence</h4><p>What happens if it isn’t solved? “Not much” means it may not be worth solving.</p></div>
+    <div class="cs-cell"><h4>Cause</h4><p>Why does it exist? Use the result of your Five Whys.</p></div>
+    <div class="cs-cell"><h4>Confirmation</h4><p>What evidence shows it’s real, significant and worth prioritising?</p></div>
+  </div>
+  <p><strong>Final check:</strong> does the statement describe the problem, or sneak in a solution?</p>
+
+  <h2>Coming next</h2>
+  <p>Metrics · Assumptions and risks · Customer experience</p>
+</article>
+</main>

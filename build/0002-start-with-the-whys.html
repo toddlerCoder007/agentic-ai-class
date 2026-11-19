@@ -1,0 +1,559 @@
+<title>Start With the Whys</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Product Thinking course — shared stylesheet.
+   Layout: one reading column (~65ch) with Tufte-style margin notes that
+   fold inline below 1100px. Practice blocks sit on a tinted "worksheet" ground. */
+
+:root {
+  --paper: #f6f8f7;
+  --ink: #17242b;
+  --ink-soft: #4a5a62;
+  --rule: #d5dedb;
+  --sheet: #e9efed;
+  --accent: #0e6b62;        /* problem / correct */
+  --accent-ink: #ffffff;
+  --trap: #8c3a63;          /* solution-in-disguise / incorrect */
+  --trap-bg: #f5e8ee;
+  --ok-bg: #e0f0ec;
+  --focus: #1f5fd1;
+
+  --font-body: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-ui: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3rem;
+  --step-2: 1.7rem;
+  --step-3: 2.4rem;
+  --measure: 40rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121a1e; --ink: #e3ebe8; --ink-soft: #9fb0b3; --rule: #2c3a3f;
+    --sheet: #1a2529; --accent: #4fc2b2; --accent-ink: #0b1a17;
+    --trap: #e08ab5; --trap-bg: #2e1c26; --ok-bg: #16302c; --focus: #8fb4ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121a1e; --ink: #e3ebe8; --ink-soft: #9fb0b3; --rule: #2c3a3f;
+  --sheet: #1a2529; --accent: #4fc2b2; --accent-ink: #0b1a17;
+  --trap: #e08ab5; --trap-bg: #2e1c26; --ok-bg: #16302c; --focus: #8fb4ff;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  margin: 0;
+}
+.page {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-block: 3rem 5rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.col { max-width: var(--measure); }
+@media (min-width: 1100px) { .page { padding-left: max(4rem, env(safe-area-inset-left, 0px)); } }
+
+h1, h2, h3 { font-family: var(--font-ui); text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: var(--step-3); font-weight: 600; letter-spacing: -0.015em; }
+h2 { font-size: var(--step-2); font-weight: 600; margin-top: 3rem; }
+h3 { font-size: var(--step-1); font-weight: 600; margin-top: 2rem; }
+p { margin: 0.9rem 0; }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:focus-visible, button:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+strong { font-weight: 600; }
+
+.eyebrow {
+  font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-soft); display: flex; gap: 0.75rem; flex-wrap: wrap;
+}
+.dek { font-size: var(--step-1); color: var(--ink-soft); line-height: 1.45; margin-top: 1rem; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+/* Margin notes (Tufte). Inline, smaller, below 1100px. */
+.note {
+  font-family: var(--font-ui); font-size: var(--step--1); line-height: 1.45; color: var(--ink-soft);
+  display: block; border-left: 2px solid var(--rule); padding-left: 0.75rem; margin: 0.75rem 0;
+}
+@media (min-width: 1100px) {
+  .has-notes { position: relative; }
+  .note { float: right; clear: right; width: 15rem; margin-right: -18rem; margin-top: 0.3rem; }
+}
+
+blockquote.source {
+  margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 3px solid var(--accent);
+  font-size: var(--step-1); line-height: 1.4;
+}
+blockquote.source cite { display: block; font-family: var(--font-ui); font-size: var(--step--1); font-style: normal; color: var(--ink-soft); margin-top: 0.4rem; }
+
+/* Two-column "what we hear / real issue" table */
+.pairs { width: 100%; border-collapse: collapse; font-size: var(--step-0); margin: 1.25rem 0; }
+.pairs-wrap { overflow-x: auto; }
+.pairs th { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); text-align: left; font-weight: 500; padding: 0.4rem 0.75rem 0.4rem 0; border-bottom: 1px solid var(--rule); }
+.pairs td { padding: 0.65rem 0.75rem 0.65rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.pairs td:first-child { color: var(--trap); font-style: italic; width: 38%; }
+
+/* The three questions */
+.questions { counter-reset: q; list-style: none; padding: 0; margin: 1.25rem 0; display: grid; gap: 0.6rem; }
+.questions li { counter-increment: q; display: grid; grid-template-columns: 2rem 1fr; align-items: baseline; font-size: var(--step-1); }
+.questions li::before { content: counter(q); font-family: var(--font-mono); font-size: var(--step-0); color: var(--accent); }
+
+/* Worksheet blocks for practice */
+.sheet { background: var(--sheet); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0; }
+.sheet > h3:first-child { margin-top: 0; }
+.sheet-label { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 600; }
+
+/* Classification quiz */
+.cq-item { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.cq-item:first-of-type { border-top: 0; }
+.cq-stmt { font-size: var(--step-0); margin: 0 0 0.6rem; }
+.cq-stmt::before { content: "\201C"; } .cq-stmt::after { content: "\201D"; }
+.cq-choices { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn {
+  font-family: var(--font-ui); font-size: var(--step--1); font-weight: 500; cursor: pointer;
+  border: 1px solid var(--ink-soft); background: transparent; color: var(--ink);
+  padding: 0.45rem 0.9rem; border-radius: 4px; min-width: 9.5rem;
+}
+.btn:hover:not(:disabled) { border-color: var(--ink); background: var(--paper); }
+.btn:disabled { cursor: default; opacity: 0.55; }
+.btn.picked { opacity: 1; border-width: 2px; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.feedback { font-family: var(--font-ui); font-size: var(--step--1); line-height: 1.5; margin-top: 0.6rem; padding: 0.6rem 0.8rem; border-radius: 4px; }
+.feedback.right { background: var(--ok-bg); }
+.feedback.wrong { background: var(--trap-bg); }
+.feedback b { font-weight: 600; }
+.score { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-soft); font-variant-numeric: tabular-nums; margin-top: 0.5rem; }
+
+/* Reframe exercise */
+.field { display: grid; gap: 0.3rem; margin: 0.9rem 0; }
+.field label { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; }
+.field textarea {
+  font-family: var(--font-body); font-size: var(--step-0); color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 4px; padding: 0.55rem 0.7rem; min-height: 3.2rem; resize: vertical; width: 100%;
+}
+.checks { list-style: none; padding: 0; margin: 0.75rem 0; font-family: var(--font-ui); font-size: var(--step--1); display: grid; gap: 0.35rem; }
+.checks li::before { display: inline-block; width: 1.4rem; font-family: var(--font-mono); }
+.checks li.pass::before { content: "✓"; color: var(--accent); }
+.checks li.fail::before { content: "✗"; color: var(--trap); }
+.flag { color: var(--trap); font-weight: 600; }
+
+/* Why-chain (Five Whys): a vertical rail with nodes. .chain is the interactive one, .why-static the worked example. */
+.chain, .why-static { list-style: none; padding: 0 0 0 1.4rem; position: relative; display: grid; }
+.chain::before, .why-static::before { content: ""; position: absolute; left: 0.45rem; top: 0.4rem; bottom: 0.4rem; width: 2px; background: var(--rule); }
+.chain-item::before, .why-static li::before { content: ""; position: absolute; left: -1.2rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--accent); }
+.chain { margin: 0.5rem 0; gap: 0.45rem; }
+.chain-item { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 0.5rem 0.6rem 0.5rem 0.8rem; }
+.chain-item::before { top: 50%; margin-top: -0.3rem; }
+.chain-item.ok { border-color: var(--accent); }
+.chain-item.bad { border-color: var(--trap); background: var(--trap-bg); }
+.chain-text { min-width: 0; }
+.chain-ctrls { display: flex; gap: 0.25rem; flex-shrink: 0; }
+.mini { font-family: var(--font-mono); width: 2rem; height: 2rem; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); border-radius: 4px; cursor: pointer; }
+.mini:disabled { opacity: 0.3; cursor: default; }
+.chain-end { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); margin: 0.5rem 0; }
+.why-static { margin: 1rem 0; gap: 0.5rem; }
+.why-static li { position: relative; }
+.why-static li::before { top: 0.55em; }
+.why-static li span { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 0.5rem; }
+.why-static li.fix { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; color: var(--accent); }
+.why-static li.fix::before { background: none; }
+
+/* 4Cs grid */
+.cs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+.cs-cell { border-top: 3px solid var(--accent); background: var(--sheet); padding: 0.8rem 1rem; border-radius: 0 0 4px 4px; min-width: 0; }
+.cs-cell h4 { font-family: var(--font-ui); font-size: var(--step-0); margin: 0 0 0.3rem; }
+.cs-cell p { margin: 0; font-size: var(--step--1); font-family: var(--font-ui); color: var(--ink-soft); }
+.factsheet { font-family: var(--font-ui); font-size: var(--step--1); background: var(--paper); border: 1px dashed var(--rule); border-radius: 4px; padding: 0.75rem 1rem; }
+.factsheet ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+
+details.reveal { margin: 1rem 0; border-top: 1px solid var(--rule); padding-top: 0.75rem; }
+details.reveal summary { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; cursor: pointer; color: var(--accent); }
+details.reveal[open] summary { margin-bottom: 0.5rem; }
+
+.callout { font-family: var(--font-ui); font-size: var(--step--1); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+.callout strong { display: block; font-size: var(--step-0); margin-bottom: 0.25rem; }
+.nextprev { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: var(--font-ui); font-size: var(--step--1); }
+
+@media (prefers-reduced-motion: no-preference) { .feedback { animation: fade 160ms ease-out; } }
+@keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
+
+@media print {
+  body { background: #fff; color: #000; }
+  .sheet { background: none; border: 1px solid #999; }
+  .note { float: none; width: auto; margin: 0.5rem 0; }
+}
+</style>
+<main class="page">
+<article class="col has-notes">
+
+  <div class="eyebrow"><span>Product Thinking</span><span>Lesson 2</span><span>About 15 minutes</span></div>
+  <h1>Start with the whys</h1>
+  <p class="dek">In <a href="https://claude.ai/artifact/SLMDRewweQV5ttsDJBdD9Z">Lesson 1</a> you learned to turn a request back into a problem. But the first problem you hear is usually a symptom. This lesson teaches the Five Whys, which takes you from the symptom to a cause you can actually fix.</p>
+
+  <h2>Ask why, five times</h2>
+  <span class="note">Source: IDG, <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking2/">Module 2: Start With The Whys</a>.</span>
+  <p>IDG presents the Five Whys as a simple tool for understanding why a problem exists before you reach for a solution. Start with the symptom and ask “why?” Then ask “why?” about the answer. Each answer peels back one layer.</p>
+  <p>Here is IDG’s government example, in which applicants can’t get the grants they applied for:</p>
+
+  <span class="note">Paraphrased from IDG’s “Five Whys: two examples” graphic. IDG’s other example is everyday life: you ran a red light, and the root cause turns out to be an alarm-clock battery you forgot to replace.</span>
+  <ol class="why-static">
+    <li><span>Symptom</span>Applicants can’t get the grants they applied for.</li>
+    <li><span>Why?</span>Applications take too long to process.</li>
+    <li><span>Why?</span>Officers spend a lot of time going back and forth with applicants.</li>
+    <li><span>Why?</span>Many applications arrive incomplete.</li>
+    <li><span>Why?</span>The form is full of internal jargon.</li>
+    <li><span>Why?</span>The form was designed around how the agency works, not how applicants think.</li>
+    <li class="fix">So the fix is to redesign the form, not the processing system.</li>
+  </ol>
+  <p>Look at what happens if you stop at the second line. “Processing is slow” invites a new processing system: expensive, slow to build, and it would not stop incomplete forms arriving. The fifth answer points to something much cheaper that fixes the real problem.</p>
+
+  <h2>Choosing the level to fix</h2>
+  <p>IDG adds a warning: problems rarely have a single root cause. The aim is not to find the one perfect root cause. It is to find a cause that you can control and that is closely connected to the outcome you want.</p>
+  <span class="note">From IDG’s “Choosing the right level to fix” graphic.</span>
+  <div class="pairs-wrap">
+    <table class="pairs">
+      <thead><tr><th>Avoid</th><th>Aim for</th></tr></thead>
+      <tbody>
+        <tr><td>Fixing a symptom while the root cause is still there.</td><td>A cause close to the root.</td></tr>
+        <tr><td>Causes outside your sphere of influence.</td><td>A cause you can act on within your timeline and resources.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The level you fix at depends on who you are. A cause that one team can’t touch might be the right place for another team to work.</p>
+
+  <section class="sheet" aria-labelledby="p1">
+    <p class="sheet-label">Practice 1 · Build the chain</p>
+    <h3 id="p1">Put the whys in order</h3>
+    <p>Residents are complaining that refunds of overpaid fees reach them late. Your team has gathered five findings, but they’re jumbled. Use the arrows to put them in order, from the symptom at the top to the root cause at the bottom.</p>
+    <div id="chain1"></div>
+  </section>
+
+  <section class="sheet" aria-labelledby="p2">
+    <p class="sheet-label">Practice 2 · Pick your level</p>
+    <h3 id="p2">Fix this level, or look elsewhere?</h3>
+    <p><strong>Your situation:</strong> you are on an agency’s digital services team. Within six months you can change your agency’s forms, letters, rules and processes. You cannot change laws, or how other agencies run.</p>
+    <p><strong>The symptom:</strong> seniors often miss their subsidised health screening appointments. Here are causes your team found. For each one, decide whether your team should fix at that level.</p>
+    <div id="quiz2"></div>
+  </section>
+
+  <section class="sheet" aria-labelledby="p3">
+    <p class="sheet-label">Practice 3 · Your own problem</p>
+    <h3 id="p3">Run the Five Whys on something real</h3>
+    <p>This is IDG’s own exercise. Pick a problem your division is facing right now. Ask “why?” five times and write each answer. Then tick the answers that sit within your sphere of influence.</p>
+    <form id="whys" novalidate>
+      <div class="field"><label for="w0">The symptom</label><textarea id="w0" rows="2"></textarea></div>
+      <div id="why-fields"></div>
+      <button class="btn primary" type="submit">Check my chain</button>
+    </form>
+    <ul class="checks" id="w-results" aria-live="polite"></ul>
+    <div id="w-summary"></div>
+  </section>
+
+  <h2>Recall it</h2>
+  <p>Answer from memory first, then open each one to check. The last question goes back to Lesson 1. Revisiting earlier material like this helps you remember it.</p>
+  <details class="reveal">
+    <summary>What two kinds of cause does IDG say to avoid fixing?</summary>
+    <p>Symptoms, where the root cause would still be there afterwards, and causes outside your sphere of influence.</p>
+  </details>
+  <details class="reveal">
+    <summary>In IDG’s grants example, why is “build a faster processing system” the wrong fix?</summary>
+    <p>Slow processing is a symptom. The cause is a form full of jargon, designed around the agency rather than the applicant. Redesigning the form is cheaper, and it stops incomplete applications arriving in the first place.</p>
+  </details>
+  <details class="reveal">
+    <summary>From Lesson 1: what three questions does a problem statement answer?</summary>
+    <p>Who are our users? What are they trying to do? What’s getting in their way?</p>
+  </details>
+
+  <div class="callout">
+    <strong>Bring your chain to the next session</strong>
+    Keep the Five Whys you wrote in Practice 3. In <a href="https://claude.ai/artifact/K1rJFoduprPSPUKh5Erakc">Lesson 3</a> it becomes the Cause part of a full problem statement.
+  </div>
+
+  <div class="callout">
+    <strong>Stuck or curious? Ask your teacher.</strong>
+    Bring follow-up questions to Claude in this workspace. For example: “My whys branch into two different causes. Which one do I follow?” or “What if the root cause is in another agency?”
+  </div>
+
+  <h2>Go to the source</h2>
+  <p><strong>Primary source:</strong> <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking2/">IDG Product Thinking, Module 2: Start With The Whys</a>, which includes a short video.</p>
+  <p><strong>Quick reference:</strong> <a href="https://claude.ai/artifact/Ge3LvtWpUUEvc4tXtdiXhR">Product thinking cheat sheet</a>.</p>
+
+  <hr>
+  <nav class="nextprev" aria-label="Lessons">
+    <a href="https://claude.ai/artifact/SLMDRewweQV5ttsDJBdD9Z">← Lesson 1 · Solutions in disguise</a>
+    <a href="https://claude.ai/artifact/K1rJFoduprPSPUKh5Erakc">Lesson 3 · The 4Cs problem statement →</a>
+  </nav>
+</article>
+</main>
+
+<script>
+/* Product Thinking course — reusable lesson components.
+   Exposes window.PT = { classifyQuiz, solutionWords, findSolutionWords, reframeCheck,
+   orderChain, fourCsCheck, renderChecks }.
+   No dependencies. */
+(function () {
+  "use strict";
+
+  // Words that usually mean a statement names something to build or buy.
+  // "system" and "site" are left out: the lessons treat them as fine when they describe
+  // the obstacle or cause ("the two record systems don't share data"). Proposing one
+  // ("build a new system") is caught by SOLUTION_PHRASE instead.
+  var SOLUTION_WORDS = [
+    "app", "apps", "ai", "chatbot", "bot", "bots", "dashboard", "portal", "platform",
+    "crm", "website", "tool", "tools", "software", "superapp",
+    "automation", "automate", "cloud", "database", "api", "llm", "gpt", "whatsapp",
+    "integration", "upgrade", "migrate", "migration", "digitalise", "digitalize", "feature",
+    "features", "solution", "module"
+  ];
+  var SOLUTION_PHRASE = /\b(?:new|build|buy|implement|introduce|replace)\s+(?:(?:a|an|the|our)\s+)?(?:[a-z-]+\s+){0,2}(?:systems?|sites?)\b/g;
+
+  function findSolutionWords(text) {
+    var lower = (text || "").toLowerCase();
+    var words = lower.match(/[a-z]+/g) || [];
+    var hits = [];
+    words.forEach(function (w) {
+      if (SOLUTION_WORDS.indexOf(w) !== -1 && hits.indexOf(w) === -1) hits.push(w);
+    });
+    (lower.match(SOLUTION_PHRASE) || []).forEach(function (p) {
+      if (hits.indexOf(p) === -1) hits.push(p);
+    });
+    return hits;
+  }
+
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  /* Classification quiz.
+     mount: element. opts: { labels: [a, b], items: [{ text, answer: 0|1, why }] }
+     Labels should have the same word and character count so they give no hints. */
+  function classifyQuiz(mount, opts) {
+    var answered = 0, correct = 0;
+    var score = el("p", { class: "score", "aria-live": "polite" });
+    function updateScore() {
+      score.textContent = answered === 0
+        ? opts.items.length + " statements. Pick one label for each."
+        : correct + " of " + answered + " right so far (" + opts.items.length + " total).";
+    }
+    opts.items.forEach(function (item, i) {
+      var box = el("div", { class: "cq-item" });
+      box.appendChild(el("p", { class: "cq-stmt" }, item.text));
+      var row = el("div", { class: "cq-choices", role: "group", "aria-label": "Statement " + (i + 1) });
+      var fb = el("div", { "aria-live": "polite" });
+      var buttons = opts.labels.map(function (label, idx) {
+        var b = el("button", { type: "button", class: "btn", id: "cq-" + mount.id + "-" + i + "-" + idx }, label);
+        b.addEventListener("click", function () {
+          buttons.forEach(function (x) { x.disabled = true; });
+          b.classList.add("picked");
+          var ok = idx === item.answer;
+          answered++; if (ok) correct++;
+          fb.className = "feedback " + (ok ? "right" : "wrong");
+          fb.innerHTML = "";
+          fb.appendChild(el("b", null, (ok ? "Right. " : "Not quite. It's “" + opts.labels[item.answer] + ".” ")));
+          fb.appendChild(document.createTextNode(item.why));
+          updateScore();
+        });
+        row.appendChild(b);
+        return b;
+      });
+      box.appendChild(row);
+      box.appendChild(fb);
+      mount.appendChild(box);
+    });
+    updateScore();
+    mount.appendChild(score);
+  }
+
+  /* Reframe check: given {who, goal, obstacle} strings, return a list of
+     { ok, text } checks for instant feedback. */
+  function reframeCheck(f) {
+    var checks = [];
+    var who = (f.who || "").trim(), goal = (f.goal || "").trim(), obs = (f.obstacle || "").trim();
+    checks.push({ ok: who.split(/\s+/).length >= 2, text: "Names a specific group of people, not just “users” or “the public”." });
+    if (/^(users?|the public|everyone|citizens|people)\.?$/i.test(who)) checks[0].ok = false;
+    checks.push({ ok: goal.length >= 10, text: "Says what they are trying to get done." });
+    checks.push({ ok: obs.length >= 10, text: "Describes what gets in their way." });
+    var hits = findSolutionWords(who + " " + goal + " " + obs);
+    checks.push({
+      ok: hits.length === 0,
+      text: hits.length === 0
+        ? "Mentions no technology or product. It is a problem, not a solution."
+        : "Mentions a solution word (" + hits.join(", ") + "). Rewrite without naming what to build.",
+      hits: hits
+    });
+    checks.push({ ok: /\d/.test(who + goal + obs), text: "Bonus: includes a number (how many, how long, how often). This becomes evidence later." , bonus: true });
+    return checks;
+  }
+
+  /* Order-the-chain exercise. The learner moves cards up and down, then checks.
+     mount: element. opts: { top, bottom, correct: [strings in correct order],
+     start: [indexes into correct, the scrambled starting order], explain } */
+  function orderChain(mount, opts) {
+    var order = opts.start.slice();
+    var list = el("ol", { class: "chain" });
+    var fb = el("div", { "aria-live": "polite" });
+    var ends = el("p", { class: "chain-end" }, opts.top);
+    function render(focusIdx, dir) {
+      list.innerHTML = "";
+      order.forEach(function (ci, pos) {
+        var li = el("li", { class: "chain-item" });
+        li.appendChild(el("span", { class: "chain-text" }, opts.correct[ci]));
+        var ctr = el("span", { class: "chain-ctrls" });
+        var up = el("button", { type: "button", class: "mini", "aria-label": "Move up: " + opts.correct[ci] }, "↑");
+        var dn = el("button", { type: "button", class: "mini", "aria-label": "Move down: " + opts.correct[ci] }, "↓");
+        up.disabled = pos === 0; dn.disabled = pos === order.length - 1;
+        up.addEventListener("click", function () { swap(pos, pos - 1); render(pos - 1, "up"); });
+        dn.addEventListener("click", function () { swap(pos, pos + 1); render(pos + 1, "dn"); });
+        ctr.appendChild(up); ctr.appendChild(dn); li.appendChild(ctr);
+        list.appendChild(li);
+        if (focusIdx === pos) setTimeout(function () { (dir === "up" && !up.disabled ? up : dn.disabled ? up : dn).focus(); }, 0);
+      });
+      fb.className = ""; fb.textContent = "";
+    }
+    function swap(a, b) { var t = order[a]; order[a] = order[b]; order[b] = t; }
+    var check = el("button", { type: "button", class: "btn primary" }, "Check the order");
+    check.addEventListener("click", function () {
+      var wrong = 0;
+      order.forEach(function (ci, pos) {
+        var ok = ci === pos;
+        list.children[pos].classList.toggle("ok", ok);
+        list.children[pos].classList.toggle("bad", !ok);
+        if (!ok) wrong++;
+      });
+      fb.className = "feedback " + (wrong ? "wrong" : "right");
+      fb.innerHTML = "";
+      fb.appendChild(el("b", null, wrong ? wrong + " out of place. " : "Right. "));
+      fb.appendChild(document.createTextNode(wrong
+        ? "Read it from the top as “…why? Because…”. Each line should explain the one above it."
+        : opts.explain));
+    });
+    mount.appendChild(ends);
+    mount.appendChild(list);
+    mount.appendChild(el("p", { class: "chain-end" }, opts.bottom));
+    mount.appendChild(check);
+    mount.appendChild(fb);
+    render();
+  }
+
+  /* A Cause should give a reason, not restate the symptom. These phrases mark an explanation
+     ("because…", "was set up when…"); common words like "only" or "never" do not, since a
+     symptom such as "can only be booked by phone" uses them too. */
+  var CAUSE_MARKER = /\b(?:because|since|due to|as a result|so that|lack of|no one|nobody|(?:was|were|is|are|has been|have been)\s+(?:originally\s+|never\s+|only\s+)?(?:built|set up|designed|written|copied|made|created|set|planned|chosen|based))\b/i;
+
+  /* 4Cs draft check. f = { clarity, consequence, cause, confirmation }. */
+  function fourCsCheck(f) {
+    var get = function (k) { return (f[k] || "").trim(); };
+    var all = ["clarity", "consequence", "cause", "confirmation"].map(get).join(" ");
+    var hits = findSolutionWords(all);
+    return [
+      { ok: get("clarity").split(/\s+/).length >= 8, text: "Clarity says who is affected, what they’re trying to do and what’s broken." },
+      { ok: /\d/.test(get("clarity")), text: "Clarity shows how badly it’s broken, with a number (how long, how often or how many)." },
+      { ok: get("consequence").split(/\s+/).length >= 6, text: "Consequence says what happens if nobody solves it." },
+      { ok: CAUSE_MARKER.test(get("cause")),
+        text: "Cause gives a reason the problem exists (ideally where your Five Whys landed), not a restatement of the symptom." },
+      { ok: /\d/.test(get("confirmation")), text: "Confirmation cites evidence: a figure, a source or a count." },
+      { ok: hits.length === 0, text: hits.length === 0
+          ? "No solution has crept in. All four fields describe the problem."
+          : "A solution has crept in (" + hits.join(", ") + "). Take it out. Solutions come after the statement." }
+    ];
+  }
+
+  function renderChecks(ul, checks) {
+    ul.innerHTML = "";
+    checks.forEach(function (c) {
+      var li = el("li", null, c.text);
+      li.className = c.ok ? "pass" : (c.bonus ? "" : "fail");
+      if (!c.ok && c.bonus) li.style.paddingLeft = "1.4rem";
+      ul.appendChild(li);
+    });
+    return checks.filter(function (c) { return !c.bonus; }).every(function (c) { return c.ok; });
+  }
+
+  window.PT = { classifyQuiz: classifyQuiz, solutionWords: SOLUTION_WORDS, findSolutionWords: findSolutionWords,
+    reframeCheck: reframeCheck, orderChain: orderChain, fourCsCheck: fourCsCheck, renderChecks: renderChecks };
+})();
+</script>
+<script>
+(function () {
+  PT.orderChain(document.getElementById("chain1"), {
+    top: "Symptom: residents say refunds are late",
+    bottom: "Root cause",
+    correct: [
+      "Refunds take six weeks to reach residents.",
+      "Each refund waits in a queue for manual approval by the finance team.",
+      "The fraud filter sends four in ten refunds to manual review.",
+      "The filter treats any recent change of address as a fraud signal.",
+      "The rule was copied from an older tax system in 2019 and never reviewed for refunds."
+    ],
+    start: [2, 4, 0, 3, 1],
+    explain: "Stopping at line two would suggest hiring more finance staff to clear the queue. The bottom line points to a cheaper fix: review one fraud rule."
+  });
+
+  PT.classifyQuiz(document.getElementById("quiz2"), {
+    labels: ["Fix this level", "Look elsewhere"],
+    items: [
+      { text: "Reminder letters go to old addresses, because the mailing list is updated only once a year.", answer: 0,
+        why: "This is close to the root, and your team owns the mailing process. A good level to fix." },
+      { text: "35% of screening appointments end in a no-show.", answer: 1,
+        why: "This is the symptom itself. Fixing it directly (for example by overbooking slots) leaves the causes in place." },
+      { text: "Seniors in general are less comfortable with digital services than younger people.", answer: 1,
+        why: "It may be true, but it’s broad and outside your influence. Ask why again to find something specific that your team can change." },
+      { text: "The appointment confirmation is only in English, but many seniors read Chinese, Malay or Tamil first.", answer: 0,
+        why: "Your team controls the letters, and this links directly to seniors missing the date. A good level to fix." },
+      { text: "The appointment time is assigned without asking, so it often clashes with seniors’ other commitments.", answer: 0,
+        why: "This is a process your agency runs, and it’s directly linked to no-shows. A good level to fix." },
+      { text: "Bus routes to some screening centres are slow and need a transfer.", answer: 1,
+        why: "This is a real cause, but transport is another agency’s responsibility. Pass the finding on to them, and focus your own fix on something you control." }
+    ]
+  });
+
+  // Five Whys builder
+  var holder = document.getElementById("why-fields");
+  for (var i = 1; i <= 5; i++) {
+    var d = document.createElement("div");
+    d.className = "field";
+    d.innerHTML = '<label for="w' + i + '">Why? (' + i + ' of 5)</label><textarea id="w' + i + '" rows="2"></textarea>' +
+      '<label style="font-weight:400;display:flex;gap:0.4rem;align-items:center"><input type="checkbox" id="wc' + i + '"> Within my sphere of influence</label>';
+    holder.appendChild(d);
+  }
+  document.getElementById("whys").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = function (id) { return document.getElementById(id).value.trim(); };
+    var answers = [1, 2, 3, 4, 5].map(function (n) { return v("w" + n); });
+    var inf = [1, 2, 3, 4, 5].filter(function (n) { return document.getElementById("wc" + n).checked && v("w" + n); });
+    var hits = PT.findSolutionWords(answers.join(" "));
+    var filled = answers.filter(Boolean).length;
+    PT.renderChecks(document.getElementById("w-results"), [
+      { ok: v("w0").length > 5, text: "The symptom is written down." },
+      { ok: filled === 5, text: filled === 5 ? "All five whys are answered." : filled + " of 5 whys answered. Keep going. The useful answers are usually the deep ones." },
+      { ok: hits.length === 0, text: hits.length === 0 ? "Your answers are causes, not solutions." : "A solution has crept into your whys (" + hits.join(", ") + "). A why answers “because…”, not “we should…”." },
+      { ok: inf.length > 0, text: inf.length > 0 ? "You marked at least one cause you can act on." : "Tick at least one why that sits within your sphere of influence." }
+    ]);
+    var sum = document.getElementById("w-summary");
+    sum.innerHTML = "";
+    if (inf.length) {
+      var deepest = Math.max.apply(null, inf);
+      var p = document.createElement("div");
+      p.className = "feedback right";
+      p.textContent = "Candidate level to fix: why " + deepest + ", “" + v("w" + deepest) + "”. It is the deepest cause you marked as within your influence. Check it against IDG’s test: is it close to the root, and can you act on it within your timeline and resources?";
+      sum.appendChild(p);
+    }
+  });
+})();
+</script>

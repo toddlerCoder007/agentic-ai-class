@@ -7,7 +7,7 @@
 - [IDG Module 1: Understanding the Problem](https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking1/)
   Covers "solutions in disguise" (e.g. "we need more AI", "we need a CRM"), the three principles, and the nail-one-problem-then-scale pattern (Grab, Amazon, Netflix). Most of the content is in images on the page. Video: https://youtu.be/DqGP6BvyRdk. Use for: Lesson 1.
 - [IDG Module 2 (URL: productthinking2): Start With The Whys](https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking2/)
-  Five Whys root cause analysis. Not yet read in detail. Use for: Lesson 2.
+  Five Whys root cause analysis: moving from symptom to cause. Two examples (running a red light; applicants who can't get grants, where the fix is to redesign the form, not the processing system). Also covers choosing the level to fix: close to the root and within your control and resources; avoid symptoms and causes outside your influence. Video: https://youtu.be/wdzcM6ax5YY. Use for: Lesson 2.
 - [IDG Module 3 (URL: productthinking3): Craft a Clear Problem Statement](https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking3/)
   The 4Cs: Clarity (who, trying to do what, what's broken, how badly), Consequence (what happens if unsolved), Cause (root reason, linked to the Five Whys), Confirmation (evidence it is real and worth prioritising). Worked example: repeated form-filling across government services (15+ repeats, 68% abandonment). Video: https://youtu.be/aBSAouM7iaE. Use for: Lesson 3.
 - [IDG Modules 4–7: Metrics, Assumptions and Risks, Customer Experience, Key Takeaways](https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/)

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The 4Cs Problem Statement</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+<main class="page">
+<article class="col has-notes">
+
+  <div class="eyebrow"><span>Product Thinking</span><span>Lesson 3</span><span>About 20 minutes</span></div>
+  <h1>The 4Cs problem statement</h1>
+  <p class="dek">You can now turn a request into a problem (<a href="../lessons/0001-solutions-in-disguise.html">Lesson 1</a>) and dig down to a cause you can fix (<a href="../lessons/0002-start-with-the-whys.html">Lesson 2</a>). This lesson puts both together in a single statement that your team can agree on before anyone builds anything.</p>
+
+  <h2>Four dimensions, one statement</h2>
+  <span class="note">Source: IDG, <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking3/">Module 3: Craft a Clear Problem Statement</a>. The guiding questions are paraphrased from IDG’s 4Cs graphic.</span>
+  <p>IDG’s 4Cs framework comes after you have found the root cause. Its job is to state the problem clearly enough to keep the whole team aligned on it. IDG’s tagline for it: four dimensions, one statement, no solutions yet.</p>
+  <div class="cs-grid">
+    <div class="cs-cell"><h4>Clarity</h4><p>Who is affected? What are they trying to do? What is broken, and how badly?</p></div>
+    <div class="cs-cell"><h4>Consequence</h4><p>What happens if nobody solves this? If the honest answer is “not much”, it may not be worth solving.</p></div>
+    <div class="cs-cell"><h4>Cause</h4><p>Why does the problem exist? This links back to your Five Whys and points toward the root.</p></div>
+    <div class="cs-cell"><h4>Confirmation</h4><p>What evidence shows the problem is real, significant and worth prioritising?</p></div>
+  </div>
+  <p>Notice that Clarity is Lesson 1’s three questions plus one more: <em>how badly</em>. And Cause is where your Five Whys chain ends up.</p>
+
+  <h3>IDG’s worked example</h3>
+  <span class="note">Figures from IDG’s worked example: repeated form-filling across government services.</span>
+  <div class="pairs-wrap">
+    <table class="pairs">
+      <tbody>
+        <tr><td style="font-style:normal;color:var(--ink)"><strong>Clarity</strong></td><td>Citizens fill in the same information 15 or more times. Each form takes 20 to 30 minutes, and many give up and miss benefits they are entitled to.</td></tr>
+        <tr><td style="font-style:normal;color:var(--ink)"><strong>Consequence</strong></td><td>People lose support they qualify for, and trust erodes. The burden falls hardest on those least able to navigate complex processes.</td></tr>
+        <tr><td style="font-style:normal;color:var(--ink)"><strong>Cause</strong></td><td>Different agencies built their services separately, at different times, with no shared data layer.</td></tr>
+        <tr><td style="font-style:normal;color:var(--ink)"><strong>Confirmation</strong></td><td>68% of transactions are abandoned because of form-filling frustration: 204,000 out of 300,000 a year.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The statement never says “build a single sign-on” or “use AI to pre-fill forms”. Those might come later. For now the team only agrees on what is wrong, how much it matters, why it happens, and how they know.</p>
+
+  <section class="sheet" aria-labelledby="p1">
+    <p class="sheet-label">Practice 1 · Sort the sentences</p>
+    <h3 id="p1">Which C is this?</h3>
+    <p>A team is looking at food licence renewals for hawkers and café owners. Their notes are mixed up. Label each sentence with the C it belongs to.</p>
+    <div id="quiz3"></div>
+  </section>
+
+  <section class="sheet" aria-labelledby="p2">
+    <p class="sheet-label">Practice 2 · Write one</p>
+    <h3 id="p2">Draft a 4Cs statement</h3>
+    <p>Back to the clinic from Lesson 1. Your director wanted a WhatsApp booking bot, and you reframed that as a problem. Since then, your team has collected the facts below. Write the 4Cs from them.</p>
+    <div class="factsheet">
+      <strong>Fact sheet</strong> (made-up practice data)
+      <ul>
+        <li>Appointments can only be booked by phone. The line is staffed 9am to 5pm on weekdays.</li>
+        <li>The line gets 11,000 calls a month. 4,100 callers hang up after waiting more than 10 minutes.</li>
+        <li>62% of callers are aged 25 to 59, and most call during their lunch break.</li>
+        <li>In a follow-up survey, 30% of callers who gave up didn’t book anywhere within two weeks. Some went to an emergency department instead.</li>
+        <li>Your Five Whys ended here: booking was set up when the phone was the only channel, and the line’s hours were set to match clinic opening hours.</li>
+      </ul>
+    </div>
+    <form id="fourcs" novalidate>
+      <div class="field"><label for="c1">Clarity: who, trying to do what, what’s broken, how badly</label><textarea id="c1" rows="3"></textarea></div>
+      <div class="field"><label for="c2">Consequence: what happens if it isn’t solved</label><textarea id="c2" rows="2"></textarea></div>
+      <div class="field"><label for="c3">Cause: why it exists</label><textarea id="c3" rows="2"></textarea></div>
+      <div class="field"><label for="c4">Confirmation: the evidence</label><textarea id="c4" rows="2"></textarea></div>
+      <button class="btn primary" type="submit">Check my statement</button>
+    </form>
+    <ul class="checks" id="c-results" aria-live="polite"></ul>
+    <details class="reveal" id="c-model">
+      <summary>Compare with one strong answer</summary>
+      <p><strong>Clarity:</strong> Working-age residents who need a clinic appointment can only book by phone, between 9am and 5pm on weekdays, which are their working hours. About 4,100 calls a month are abandoned after a wait of more than 10 minutes.</p>
+      <p><strong>Consequence:</strong> People put off care. Nearly a third of those who give up don’t book anywhere within two weeks, and some end up in emergency departments with conditions a clinic could treat.</p>
+      <p><strong>Cause:</strong> Booking was set up when the phone was the only channel. The line’s hours follow clinic opening hours, not the times when callers are free.</p>
+      <p><strong>Confirmation:</strong> Call logs show 4,100 of 11,000 monthly calls abandoned. 62% of callers are aged 25 to 59, and 30% of those who give up don’t book within two weeks.</p>
+      <p>IDG’s final check: does the statement describe the problem, or does it sneak in a solution? This one leaves room for a bot, longer phone hours, online booking or evening walk-ins. The original request had already chosen one of them.</p>
+    </details>
+  </section>
+
+  <h2>Recall it</h2>
+  <p>Answer from memory first, then open each one to check. Two of the questions go back to earlier lessons.</p>
+  <details class="reveal">
+    <summary>Name the 4Cs, and the question each one answers.</summary>
+    <p>Clarity: who, doing what, what’s broken, how badly. Consequence: what happens if it isn’t solved. Cause: why it exists. Confirmation: what evidence shows it’s real and worth prioritising.</p>
+  </details>
+  <details class="reveal">
+    <summary>Which C can tell you a problem isn’t worth solving?</summary>
+    <p>Consequence. If not much happens when the problem goes unsolved, it may not deserve the team’s time.</p>
+  </details>
+  <details class="reveal">
+    <summary>From Lesson 2: where does the Cause in a 4Cs statement come from?</summary>
+    <p>From your Five Whys: the deepest cause that is close to the root and within your sphere of influence.</p>
+  </details>
+  <details class="reveal">
+    <summary>From Lesson 1: what gives away a solution in disguise?</summary>
+    <p>It names a thing to build or buy before saying who is struggling and why.</p>
+  </details>
+
+  <div class="callout">
+    <strong>Try it at work this week</strong>
+    Take the Five Whys chain from Lesson 2’s Practice 3 and turn it into a 4Cs statement about your own problem. Then show it to a colleague and ask: “Do you agree this is the problem?” Their pushback is part of the learning. Bring it to your next session.
+  </div>
+
+  <div class="callout">
+    <strong>Stuck or curious? Ask your teacher.</strong>
+    Bring follow-up questions to Claude in this workspace. For example: “I don’t have any data for Confirmation yet. What counts as evidence?” or “Can you critique my 4Cs statement?”
+  </div>
+
+  <h2>Go to the source</h2>
+  <p><strong>Primary source:</strong> <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking3/">IDG Product Thinking, Module 3: Craft a Clear Problem Statement</a>, with its video and IDG’s own exercise.</p>
+  <p><strong>Quick reference:</strong> <a href="../reference/product-thinking-cheatsheet.html">Product thinking cheat sheet</a>.</p>
+
+  <hr>
+  <nav class="nextprev" aria-label="Lessons">
+    <a href="../lessons/0002-start-with-the-whys.html">← Lesson 2 · Start with the whys</a>
+    <span>Next: Lesson 4 · Metrics (outcomes over outputs)</span>
+  </nav>
+</article>
+</main>
+
+<script src="../assets/components.js"></script>
+<script>
+(function () {
+  PT.classifyQuiz(document.getElementById("quiz3"), {
+    labels: ["Clarity", "Consequence", "Cause", "Confirmation"],
+    items: [
+      { text: "Café and hawker owners renewing their food licence must visit an office in person, and the visit takes half a day.", answer: 0,
+        why: "It names who is affected, what they’re trying to do, and how bad it is (half a day lost)." },
+      { text: "Renewal still requires a wet-ink signature, because the process was written before e-signatures were legally accepted.", answer: 2,
+        why: "The word “because” is the clue. This explains why the problem exists." },
+      { text: "Lapsed licences lead to more enforcement visits, which pull inspectors away from food-safety checks.", answer: 1,
+        why: "This is the knock-on cost of leaving the problem unsolved." },
+      { text: "Last year, 2,300 of 9,000 renewals were late, and the counter logged an average wait of 70 minutes.", answer: 3,
+        why: "Hard figures that show the problem is real and significant." },
+      { text: "Owners want to keep trading legally while spending as little time away from their stall as possible.", answer: 0,
+        why: "This is what the users are trying to do, which is part of Clarity." },
+      { text: "Counter officers re-check documents already submitted online, because the two record systems don’t share data.", answer: 2,
+        why: "This is a root reason. It mentions systems, but it describes why the problem happens and doesn’t prescribe a fix." },
+      { text: "In 40 interviews, 31 owners said losing a morning of business is the main reason they renew late.", answer: 3,
+        why: "User research counts as evidence. It confirms the problem with real people." },
+      { text: "If nothing changes, owners keep losing a morning’s takings each year, and some let licences lapse and risk fines.", answer: 1,
+        why: "“If nothing changes” is the clue. This describes what is at stake." }
+    ]
+  });
+
+  document.getElementById("fourcs").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = function (id) { return document.getElementById(id).value; };
+    var allOk = PT.renderChecks(document.getElementById("c-results"),
+      PT.fourCsCheck({ clarity: v("c1"), consequence: v("c2"), cause: v("c3"), confirmation: v("c4") }));
+    if (allOk) document.getElementById("c-model").open = true;
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Start With the Whys</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+<main class="page">
+<article class="col has-notes">
+
+  <div class="eyebrow"><span>Product Thinking</span><span>Lesson 2</span><span>About 15 minutes</span></div>
+  <h1>Start with the whys</h1>
+  <p class="dek">In <a href="../lessons/0001-solutions-in-disguise.html">Lesson 1</a> you learned to turn a request back into a problem. But the first problem you hear is usually a symptom. This lesson teaches the Five Whys, which takes you from the symptom to a cause you can actually fix.</p>
+
+  <h2>Ask why, five times</h2>
+  <span class="note">Source: IDG, <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking2/">Module 2: Start With The Whys</a>.</span>
+  <p>IDG presents the Five Whys as a simple tool for understanding why a problem exists before you reach for a solution. Start with the symptom and ask “why?” Then ask “why?” about the answer. Each answer peels back one layer.</p>
+  <p>Here is IDG’s government example, in which applicants can’t get the grants they applied for:</p>
+
+  <span class="note">Paraphrased from IDG’s “Five Whys: two examples” graphic. IDG’s other example is everyday life: you ran a red light, and the root cause turns out to be an alarm-clock battery you forgot to replace.</span>
+  <ol class="why-static">
+    <li><span>Symptom</span>Applicants can’t get the grants they applied for.</li>
+    <li><span>Why?</span>Applications take too long to process.</li>
+    <li><span>Why?</span>Officers spend a lot of time going back and forth with applicants.</li>
+    <li><span>Why?</span>Many applications arrive incomplete.</li>
+    <li><span>Why?</span>The form is full of internal jargon.</li>
+    <li><span>Why?</span>The form was designed around how the agency works, not how applicants think.</li>
+    <li class="fix">So the fix is to redesign the form, not the processing system.</li>
+  </ol>
+  <p>Look at what happens if you stop at the second line. “Processing is slow” invites a new processing system: expensive, slow to build, and it would not stop incomplete forms arriving. The fifth answer points to something much cheaper that fixes the real problem.</p>
+
+  <h2>Choosing the level to fix</h2>
+  <p>IDG adds a warning: problems rarely have a single root cause. The aim is not to find the one perfect root cause. It is to find a cause that you can control and that is closely connected to the outcome you want.</p>
+  <span class="note">From IDG’s “Choosing the right level to fix” graphic.</span>
+  <div class="pairs-wrap">
+    <table class="pairs">
+      <thead><tr><th>Avoid</th><th>Aim for</th></tr></thead>
+      <tbody>
+        <tr><td>Fixing a symptom while the root cause is still there.</td><td>A cause close to the root.</td></tr>
+        <tr><td>Causes outside your sphere of influence.</td><td>A cause you can act on within your timeline and resources.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The level you fix at depends on who you are. A cause that one team can’t touch might be the right place for another team to work.</p>
+
+  <section class="sheet" aria-labelledby="p1">
+    <p class="sheet-label">Practice 1 · Build the chain</p>
+    <h3 id="p1">Put the whys in order</h3>
+    <p>Residents are complaining that refunds of overpaid fees reach them late. Your team has gathered five findings, but they’re jumbled. Use the arrows to put them in order, from the symptom at the top to the root cause at the bottom.</p>
+    <div id="chain1"></div>
+  </section>
+
+  <section class="sheet" aria-labelledby="p2">
+    <p class="sheet-label">Practice 2 · Pick your level</p>
+    <h3 id="p2">Fix this level, or look elsewhere?</h3>
+    <p><strong>Your situation:</strong> you are on an agency’s digital services team. Within six months you can change your agency’s forms, letters, rules and processes. You cannot change laws, or how other agencies run.</p>
+    <p><strong>The symptom:</strong> seniors often miss their subsidised health screening appointments. Here are causes your team found. For each one, decide whether your team should fix at that level.</p>
+    <div id="quiz2"></div>
+  </section>
+
+  <section class="sheet" aria-labelledby="p3">
+    <p class="sheet-label">Practice 3 · Your own problem</p>
+    <h3 id="p3">Run the Five Whys on something real</h3>
+    <p>This is IDG’s own exercise. Pick a problem your division is facing right now. Ask “why?” five times and write each answer. Then tick the answers that sit within your sphere of influence.</p>
+    <form id="whys" novalidate>
+      <div class="field"><label for="w0">The symptom</label><textarea id="w0" rows="2"></textarea></div>
+      <div id="why-fields"></div>
+      <button class="btn primary" type="submit">Check my chain</button>
+    </form>
+    <ul class="checks" id="w-results" aria-live="polite"></ul>
+    <div id="w-summary"></div>
+  </section>
+
+  <h2>Recall it</h2>
+  <p>Answer from memory first, then open each one to check. The last question goes back to Lesson 1. Revisiting earlier material like this helps you remember it.</p>
+  <details class="reveal">
+    <summary>What two kinds of cause does IDG say to avoid fixing?</summary>
+    <p>Symptoms, where the root cause would still be there afterwards, and causes outside your sphere of influence.</p>
+  </details>
+  <details class="reveal">
+    <summary>In IDG’s grants example, why is “build a faster processing system” the wrong fix?</summary>
+    <p>Slow processing is a symptom. The cause is a form full of jargon, designed around the agency rather than the applicant. Redesigning the form is cheaper, and it stops incomplete applications arriving in the first place.</p>
+  </details>
+  <details class="reveal">
+    <summary>From Lesson 1: what three questions does a problem statement answer?</summary>
+    <p>Who are our users? What are they trying to do? What’s getting in their way?</p>
+  </details>
+
+  <div class="callout">
+    <strong>Bring your chain to the next session</strong>
+    Keep the Five Whys you wrote in Practice 3. In <a href="../lessons/0003-four-cs-problem-statement.html">Lesson 3</a> it becomes the Cause part of a full problem statement.
+  </div>
+
+  <div class="callout">
+    <strong>Stuck or curious? Ask your teacher.</strong>
+    Bring follow-up questions to Claude in this workspace. For example: “My whys branch into two different causes. Which one do I follow?” or “What if the root cause is in another agency?”
+  </div>
+
+  <h2>Go to the source</h2>
+  <p><strong>Primary source:</strong> <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking2/">IDG Product Thinking, Module 2: Start With The Whys</a>, which includes a short video.</p>
+  <p><strong>Quick reference:</strong> <a href="../reference/product-thinking-cheatsheet.html">Product thinking cheat sheet</a>.</p>
+
+  <hr>
+  <nav class="nextprev" aria-label="Lessons">
+    <a href="../lessons/0001-solutions-in-disguise.html">← Lesson 1 · Solutions in disguise</a>
+    <a href="../lessons/0003-four-cs-problem-statement.html">Lesson 3 · The 4Cs problem statement →</a>
+  </nav>
+</article>
+</main>
+
+<script src="../assets/components.js"></script>
+<script>
+(function () {
+  PT.orderChain(document.getElementById("chain1"), {
+    top: "Symptom: residents say refunds are late",
+    bottom: "Root cause",
+    correct: [
+      "Refunds take six weeks to reach residents.",
+      "Each refund waits in a queue for manual approval by the finance team.",
+      "The fraud filter sends four in ten refunds to manual review.",
+      "The filter treats any recent change of address as a fraud signal.",
+      "The rule was copied from an older tax system in 2019 and never reviewed for refunds."
+    ],
+    start: [2, 4, 0, 3, 1],
+    explain: "Stopping at line two would suggest hiring more finance staff to clear the queue. The bottom line points to a cheaper fix: review one fraud rule."
+  });
+
+  PT.classifyQuiz(document.getElementById("quiz2"), {
+    labels: ["Fix this level", "Look elsewhere"],
+    items: [
+      { text: "Reminder letters go to old addresses, because the mailing list is updated only once a year.", answer: 0,
+        why: "This is close to the root, and your team owns the mailing process. A good level to fix." },
+      { text: "35% of screening appointments end in a no-show.", answer: 1,
+        why: "This is the symptom itself. Fixing it directly (for example by overbooking slots) leaves the causes in place." },
+      { text: "Seniors in general are less comfortable with digital services than younger people.", answer: 1,
+        why: "It may be true, but it’s broad and outside your influence. Ask why again to find something specific that your team can change." },
+      { text: "The appointment confirmation is only in English, but many seniors read Chinese, Malay or Tamil first.", answer: 0,
+        why: "Your team controls the letters, and this links directly to seniors missing the date. A good level to fix." },
+      { text: "The appointment time is assigned without asking, so it often clashes with seniors’ other commitments.", answer: 0,
+        why: "This is a process your agency runs, and it’s directly linked to no-shows. A good level to fix." },
+      { text: "Bus routes to some screening centres are slow and need a transfer.", answer: 1,
+        why: "This is a real cause, but transport is another agency’s responsibility. Pass the finding on to them, and focus your own fix on something you control." }
+    ]
+  });
+
+  // Five Whys builder
+  var holder = document.getElementById("why-fields");
+  for (var i = 1; i <= 5; i++) {
+    var d = document.createElement("div");
+    d.className = "field";
+    d.innerHTML = '<label for="w' + i + '">Why? (' + i + ' of 5)</label><textarea id="w' + i + '" rows="2"></textarea>' +
+      '<label style="font-weight:400;display:flex;gap:0.4rem;align-items:center"><input type="checkbox" id="wc' + i + '"> Within my sphere of influence</label>';
+    holder.appendChild(d);
+  }
+  document.getElementById("whys").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = function (id) { return document.getElementById(id).value.trim(); };
+    var answers = [1, 2, 3, 4, 5].map(function (n) { return v("w" + n); });
+    var inf = [1, 2, 3, 4, 5].filter(function (n) { return document.getElementById("wc" + n).checked && v("w" + n); });
+    var hits = PT.findSolutionWords(answers.join(" "));
+    var filled = answers.filter(Boolean).length;
+    PT.renderChecks(document.getElementById("w-results"), [
+      { ok: v("w0").length > 5, text: "The symptom is written down." },
+      { ok: filled === 5, text: filled === 5 ? "All five whys are answered." : filled + " of 5 whys answered. Keep going. The useful answers are usually the deep ones." },
+      { ok: hits.length === 0, text: hits.length === 0 ? "Your answers are causes, not solutions." : "A solution has crept into your whys (" + hits.join(", ") + "). A why answers “because…”, not “we should…”." },
+      { ok: inf.length > 0, text: inf.length > 0 ? "You marked at least one cause you can act on." : "Tick at least one why that sits within your sphere of influence." }
+    ]);
+    var sum = document.getElementById("w-summary");
+    sum.innerHTML = "";
+    if (inf.length) {
+      var deepest = Math.max.apply(null, inf);
+      var p = document.createElement("div");
+      p.className = "feedback right";
+      p.textContent = "Candidate level to fix: why " + deepest + ", “" + v("w" + deepest) + "”. It is the deepest cause you marked as within your influence. Check it against IDG’s test: is it close to the root, and can you act on it within your timeline and resources?";
+      sum.appendChild(p);
+    }
+  });
+})();
+</script>
+</body>
+</html>

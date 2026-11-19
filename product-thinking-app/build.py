@@ -8,9 +8,24 @@ fragment: the head block (title, fonts) followed by the body block, with style.c
 the three scripts inlined.
 """
 from pathlib import Path
+import json
 import re
 
 HERE = Path(__file__).resolve().parent
+PUBLISHED = HERE.parent / "build" / "published.json"
+
+
+def check_links() -> None:
+    """content.js links to the published lessons; fail if a URL drifted from build/published.json."""
+    published = json.loads(PUBLISHED.read_text(encoding="utf-8"))
+    content = (HERE / "content.js").read_text(encoding="utf-8")
+    for n, url in re.findall(r'\{\s*n:\s*(\d+),[^}]*?url:\s*"([^"]+)"', content):
+        key = next((k for k in published if k.startswith("lessons/%04d-" % int(n))), None)
+        assert key, f"lesson {n} is not in {PUBLISHED.name}"
+        assert published[key] == url, f"lesson {n}: content.js has {url}, {PUBLISHED.name} has {published[key]}"
+    cheat = re.search(r'CHEATSHEET\s*=\s*"([^"]+)"', content).group(1)
+    expected = published["reference/product-thinking-cheatsheet.html"]
+    assert cheat == expected, f"cheat sheet: content.js has {cheat}, {PUBLISHED.name} has {expected}"
 
 
 def between(text: str, start: str, end: str) -> str:
@@ -18,18 +33,20 @@ def between(text: str, start: str, end: str) -> str:
 
 
 def main() -> None:
-    page = (HERE / "index.html").read_text(encoding="utf-8")
+    check_links()
+    page =(HERE / "index.html").read_text(encoding="utf-8")
     head = between(page, "<!--HEAD-START-->", "<!--HEAD-END-->")
     body = between(page, "<!--BODY-START-->", "<!--BODY-END-->")
 
     css = (HERE / "style.css").read_text(encoding="utf-8")
-    link = '<link rel="stylesheet" href="style.css">'
+    assert "</style" not in css.lower(), "style.css contains a closing style tag"
+    link ='<link rel="stylesheet" href="style.css">'
     assert link in head, "style.css link not found"
     head = head.replace(link, "<style>\n" + css + "</style>")
 
     def inline(match: re.Match) -> str:
         js = (HERE / match.group(1)).read_text(encoding="utf-8")
-        assert "</script" not in js, f"{match.group(1)} contains a closing script tag"
+        assert "</script" not in js.lower(), f"{match.group(1)} contains a closing script tag"
         return "<script>\n" + js + "</script>"
 
     body, n = re.subn(r'<script src="([^"]+)"></script>', inline, body)

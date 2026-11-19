@@ -143,6 +143,36 @@ blockquote.source cite { display: block; font-family: var(--font-ui); font-size:
 .checks li.fail::before { content: "✗"; color: var(--trap); }
 .flag { color: var(--trap); font-weight: 600; }
 
+/* Why-chain (Five Whys): a vertical rail with nodes. .chain is the interactive one, .why-static the worked example. */
+.chain, .why-static { list-style: none; padding: 0 0 0 1.4rem; position: relative; display: grid; }
+.chain::before, .why-static::before { content: ""; position: absolute; left: 0.45rem; top: 0.4rem; bottom: 0.4rem; width: 2px; background: var(--rule); }
+.chain-item::before, .why-static li::before { content: ""; position: absolute; left: -1.2rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--accent); }
+.chain { margin: 0.5rem 0; gap: 0.45rem; }
+.chain-item { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 0.5rem 0.6rem 0.5rem 0.8rem; }
+.chain-item::before { top: 50%; margin-top: -0.3rem; }
+.chain-item.ok { border-color: var(--accent); }
+.chain-item.bad { border-color: var(--trap); background: var(--trap-bg); }
+.chain-text { min-width: 0; }
+.chain-ctrls { display: flex; gap: 0.25rem; flex-shrink: 0; }
+.mini { font-family: var(--font-mono); width: 2rem; height: 2rem; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); border-radius: 4px; cursor: pointer; }
+.mini:disabled { opacity: 0.3; cursor: default; }
+.chain-end { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); margin: 0.5rem 0; }
+.why-static { margin: 1rem 0; gap: 0.5rem; }
+.why-static li { position: relative; }
+.why-static li::before { top: 0.55em; }
+.why-static li span { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 0.5rem; }
+.why-static li.fix { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; color: var(--accent); }
+.why-static li.fix::before { background: none; }
+
+/* 4Cs grid */
+.cs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+.cs-cell { border-top: 3px solid var(--accent); background: var(--sheet); padding: 0.8rem 1rem; border-radius: 0 0 4px 4px; min-width: 0; }
+.cs-cell h4 { font-family: var(--font-ui); font-size: var(--step-0); margin: 0 0 0.3rem; }
+.cs-cell p { margin: 0; font-size: var(--step--1); font-family: var(--font-ui); color: var(--ink-soft); }
+.factsheet { font-family: var(--font-ui); font-size: var(--step--1); background: var(--paper); border: 1px dashed var(--rule); border-radius: 4px; padding: 0.75rem 1rem; }
+.factsheet ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+
 details.reveal { margin: 1rem 0; border-top: 1px solid var(--rule); padding-top: 0.75rem; }
 details.reveal summary { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; cursor: pointer; color: var(--accent); }
 details.reveal[open] summary { margin-bottom: 0.5rem; }

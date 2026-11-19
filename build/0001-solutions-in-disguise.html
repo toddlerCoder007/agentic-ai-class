@@ -1,0 +1,529 @@
+<title>Solutions in Disguise</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Product Thinking course — shared stylesheet.
+   Layout: one reading column (~65ch) with Tufte-style margin notes that
+   fold inline below 1100px. Practice blocks sit on a tinted "worksheet" ground. */
+
+:root {
+  --paper: #f6f8f7;
+  --ink: #17242b;
+  --ink-soft: #4a5a62;
+  --rule: #d5dedb;
+  --sheet: #e9efed;
+  --accent: #0e6b62;        /* problem / correct */
+  --accent-ink: #ffffff;
+  --trap: #8c3a63;          /* solution-in-disguise / incorrect */
+  --trap-bg: #f5e8ee;
+  --ok-bg: #e0f0ec;
+  --focus: #1f5fd1;
+
+  --font-body: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-ui: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3rem;
+  --step-2: 1.7rem;
+  --step-3: 2.4rem;
+  --measure: 40rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121a1e; --ink: #e3ebe8; --ink-soft: #9fb0b3; --rule: #2c3a3f;
+    --sheet: #1a2529; --accent: #4fc2b2; --accent-ink: #0b1a17;
+    --trap: #e08ab5; --trap-bg: #2e1c26; --ok-bg: #16302c; --focus: #8fb4ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121a1e; --ink: #e3ebe8; --ink-soft: #9fb0b3; --rule: #2c3a3f;
+  --sheet: #1a2529; --accent: #4fc2b2; --accent-ink: #0b1a17;
+  --trap: #e08ab5; --trap-bg: #2e1c26; --ok-bg: #16302c; --focus: #8fb4ff;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  margin: 0;
+}
+.page {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-block: 3rem 5rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.col { max-width: var(--measure); }
+@media (min-width: 1100px) { .page { padding-left: max(4rem, env(safe-area-inset-left, 0px)); } }
+
+h1, h2, h3 { font-family: var(--font-ui); text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: var(--step-3); font-weight: 600; letter-spacing: -0.015em; }
+h2 { font-size: var(--step-2); font-weight: 600; margin-top: 3rem; }
+h3 { font-size: var(--step-1); font-weight: 600; margin-top: 2rem; }
+p { margin: 0.9rem 0; }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:focus-visible, button:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+strong { font-weight: 600; }
+
+.eyebrow {
+  font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-soft); display: flex; gap: 0.75rem; flex-wrap: wrap;
+}
+.dek { font-size: var(--step-1); color: var(--ink-soft); line-height: 1.45; margin-top: 1rem; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+/* Margin notes (Tufte). Inline, smaller, below 1100px. */
+.note {
+  font-family: var(--font-ui); font-size: var(--step--1); line-height: 1.45; color: var(--ink-soft);
+  display: block; border-left: 2px solid var(--rule); padding-left: 0.75rem; margin: 0.75rem 0;
+}
+@media (min-width: 1100px) {
+  .has-notes { position: relative; }
+  .note { float: right; clear: right; width: 15rem; margin-right: -18rem; margin-top: 0.3rem; }
+}
+
+blockquote.source {
+  margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 3px solid var(--accent);
+  font-size: var(--step-1); line-height: 1.4;
+}
+blockquote.source cite { display: block; font-family: var(--font-ui); font-size: var(--step--1); font-style: normal; color: var(--ink-soft); margin-top: 0.4rem; }
+
+/* Two-column "what we hear / real issue" table */
+.pairs { width: 100%; border-collapse: collapse; font-size: var(--step-0); margin: 1.25rem 0; }
+.pairs-wrap { overflow-x: auto; }
+.pairs th { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); text-align: left; font-weight: 500; padding: 0.4rem 0.75rem 0.4rem 0; border-bottom: 1px solid var(--rule); }
+.pairs td { padding: 0.65rem 0.75rem 0.65rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.pairs td:first-child { color: var(--trap); font-style: italic; width: 38%; }
+
+/* The three questions */
+.questions { counter-reset: q; list-style: none; padding: 0; margin: 1.25rem 0; display: grid; gap: 0.6rem; }
+.questions li { counter-increment: q; display: grid; grid-template-columns: 2rem 1fr; align-items: baseline; font-size: var(--step-1); }
+.questions li::before { content: counter(q); font-family: var(--font-mono); font-size: var(--step-0); color: var(--accent); }
+
+/* Worksheet blocks for practice */
+.sheet { background: var(--sheet); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0; }
+.sheet > h3:first-child { margin-top: 0; }
+.sheet-label { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 600; }
+
+/* Classification quiz */
+.cq-item { border-top: 1px solid var(--rule); padding: 1rem 0; }
+.cq-item:first-of-type { border-top: 0; }
+.cq-stmt { font-size: var(--step-0); margin: 0 0 0.6rem; }
+.cq-stmt::before { content: "\201C"; } .cq-stmt::after { content: "\201D"; }
+.cq-choices { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn {
+  font-family: var(--font-ui); font-size: var(--step--1); font-weight: 500; cursor: pointer;
+  border: 1px solid var(--ink-soft); background: transparent; color: var(--ink);
+  padding: 0.45rem 0.9rem; border-radius: 4px; min-width: 9.5rem;
+}
+.btn:hover:not(:disabled) { border-color: var(--ink); background: var(--paper); }
+.btn:disabled { cursor: default; opacity: 0.55; }
+.btn.picked { opacity: 1; border-width: 2px; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.feedback { font-family: var(--font-ui); font-size: var(--step--1); line-height: 1.5; margin-top: 0.6rem; padding: 0.6rem 0.8rem; border-radius: 4px; }
+.feedback.right { background: var(--ok-bg); }
+.feedback.wrong { background: var(--trap-bg); }
+.feedback b { font-weight: 600; }
+.score { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-soft); font-variant-numeric: tabular-nums; margin-top: 0.5rem; }
+
+/* Reframe exercise */
+.field { display: grid; gap: 0.3rem; margin: 0.9rem 0; }
+.field label { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; }
+.field textarea {
+  font-family: var(--font-body); font-size: var(--step-0); color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 4px; padding: 0.55rem 0.7rem; min-height: 3.2rem; resize: vertical; width: 100%;
+}
+.checks { list-style: none; padding: 0; margin: 0.75rem 0; font-family: var(--font-ui); font-size: var(--step--1); display: grid; gap: 0.35rem; }
+.checks li::before { display: inline-block; width: 1.4rem; font-family: var(--font-mono); }
+.checks li.pass::before { content: "✓"; color: var(--accent); }
+.checks li.fail::before { content: "✗"; color: var(--trap); }
+.flag { color: var(--trap); font-weight: 600; }
+
+/* Why-chain (Five Whys): a vertical rail with nodes. .chain is the interactive one, .why-static the worked example. */
+.chain, .why-static { list-style: none; padding: 0 0 0 1.4rem; position: relative; display: grid; }
+.chain::before, .why-static::before { content: ""; position: absolute; left: 0.45rem; top: 0.4rem; bottom: 0.4rem; width: 2px; background: var(--rule); }
+.chain-item::before, .why-static li::before { content: ""; position: absolute; left: -1.2rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--accent); }
+.chain { margin: 0.5rem 0; gap: 0.45rem; }
+.chain-item { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 0.5rem 0.6rem 0.5rem 0.8rem; }
+.chain-item::before { top: 50%; margin-top: -0.3rem; }
+.chain-item.ok { border-color: var(--accent); }
+.chain-item.bad { border-color: var(--trap); background: var(--trap-bg); }
+.chain-text { min-width: 0; }
+.chain-ctrls { display: flex; gap: 0.25rem; flex-shrink: 0; }
+.mini { font-family: var(--font-mono); width: 2rem; height: 2rem; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); border-radius: 4px; cursor: pointer; }
+.mini:disabled { opacity: 0.3; cursor: default; }
+.chain-end { font-family: var(--font-ui); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); margin: 0.5rem 0; }
+.why-static { margin: 1rem 0; gap: 0.5rem; }
+.why-static li { position: relative; }
+.why-static li::before { top: 0.55em; }
+.why-static li span { font-family: var(--font-ui); font-size: var(--step--1); color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 0.5rem; }
+.why-static li.fix { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; color: var(--accent); }
+.why-static li.fix::before { background: none; }
+
+/* 4Cs grid */
+.cs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+.cs-cell { border-top: 3px solid var(--accent); background: var(--sheet); padding: 0.8rem 1rem; border-radius: 0 0 4px 4px; min-width: 0; }
+.cs-cell h4 { font-family: var(--font-ui); font-size: var(--step-0); margin: 0 0 0.3rem; }
+.cs-cell p { margin: 0; font-size: var(--step--1); font-family: var(--font-ui); color: var(--ink-soft); }
+.factsheet { font-family: var(--font-ui); font-size: var(--step--1); background: var(--paper); border: 1px dashed var(--rule); border-radius: 4px; padding: 0.75rem 1rem; }
+.factsheet ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+
+details.reveal { margin: 1rem 0; border-top: 1px solid var(--rule); padding-top: 0.75rem; }
+details.reveal summary { font-family: var(--font-ui); font-size: var(--step--1); font-weight: 600; cursor: pointer; color: var(--accent); }
+details.reveal[open] summary { margin-bottom: 0.5rem; }
+
+.callout { font-family: var(--font-ui); font-size: var(--step--1); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+.callout strong { display: block; font-size: var(--step-0); margin-bottom: 0.25rem; }
+.nextprev { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: var(--font-ui); font-size: var(--step--1); }
+
+@media (prefers-reduced-motion: no-preference) { .feedback { animation: fade 160ms ease-out; } }
+@keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
+
+@media print {
+  body { background: #fff; color: #000; }
+  .sheet { background: none; border: 1px solid #999; }
+  .note { float: none; width: auto; margin: 0.5rem 0; }
+}
+</style>
+<main class="page">
+<article class="col has-notes">
+
+  <div class="eyebrow"><span>Product Thinking</span><span>Lesson 1</span><span>About 12 minutes</span></div>
+  <h1>Solutions in disguise</h1>
+  <p class="dek">Most requests at work arrive as a solution: “we need a chatbot”. Your first move as a product thinker is to turn the request back into the problem behind it. This lesson teaches that move.</p>
+
+  <h2>Why start here</h2>
+  <span class="note">Source: IDG, <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking1/">Module 1: Understanding the Problem</a>.</span>
+  <blockquote class="source">“Great digital products start with problems, not solutions.”
+    <cite>Institute of Digital Government, Product Thinking, Module 1</cite>
+  </blockquote>
+  <p>IDG’s point is that a project can be well run and still fail, because it was solving the wrong problem. The team ships on time and on budget, and nobody’s life gets better.</p>
+  <p>The usual cause is that the project started from a solution. IDG lists requests it hears all the time. Each one sounds like a problem but actually names something to build or buy:</p>
+
+  <span class="note">These four pairs are paraphrased from IDG’s “common trap” graphic in Module 1.</span>
+  <div class="pairs-wrap">
+    <table class="pairs">
+      <thead><tr><th>What we hear</th><th>The problem underneath</th></tr></thead>
+      <tbody>
+        <tr><td>We need more AI.</td><td>Officers can’t make decisions from large, messy datasets.</td></tr>
+        <tr><td>We need a superapp.</td><td>Citizens can’t get to services efficiently across many platforms.</td></tr>
+        <tr><td>We don’t have a CRM.</td><td>Clunky processes cause long waits for citizens.</td></tr>
+        <tr><td>Our product is end of life.</td><td>Citizens and officers are about to lose access to critical services.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The right-hand column can be solved in many ways. The left-hand column has already picked one, often before anyone checked whether it fits.</p>
+
+  <h2>The test: three questions</h2>
+  <p>IDG’s first principle is to focus on the problem, not the solution. It comes with three questions. A real problem statement answers all three:</p>
+  <ol class="questions">
+    <li>Who are our users?</li>
+    <li>What are they trying to do?</li>
+    <li>What’s getting in their way?</li>
+  </ol>
+  <span class="note">IDG’s other two principles, “chase outcomes, not outputs” and “integrate policy, ops and tech”, are covered in later lessons.</span>
+  <p>A <strong>solution in disguise</strong> skips all three and names a thing instead: an app, a bot, a system or a migration. A tell-tale sign is that you could delete the people from the sentence and it would still make sense.</p>
+  <p>The test does not ban a statement that mentions users. “Build an app so citizens can pay fines” has users in it, but it still decides what to build before saying what is getting in the citizens’ way.</p>
+
+  <span class="note">IDG cites Grab (safer, easier taxi booking), Amazon (books only) and Netflix (cheaper, more reliable DVD rentals) as companies that began this way.</span>
+  <p>A good problem is also <strong>narrow</strong>. IDG points to companies that started by solving one specific problem for one defined group, and expanded only after that worked.</p>
+
+  <section class="sheet" aria-labelledby="p1">
+    <p class="sheet-label">Practice 1 · Spot the disguise</p>
+    <h3 id="p1">Problem or solution?</h3>
+    <p>Here are eight things a colleague might say. Label each one. You get feedback as soon as you pick.</p>
+    <div id="quiz1"></div>
+  </section>
+
+  <section class="sheet" aria-labelledby="p2">
+    <p class="sheet-label">Practice 2 · Reframe it</p>
+    <h3 id="p2">Turn a request into a problem</h3>
+    <p>Your director says: <em>“We need a WhatsApp bot so residents can book clinic appointments.”</em> Pretend you have asked around, and found out the clinic phone line is only staffed 9 to 5. Most callers are working adults, and they can’t get through during office hours.</p>
+    <p>Answer the three questions. Don’t name anything to build.</p>
+    <form id="reframe" novalidate>
+      <div class="field"><label for="rf-who">1 · Who are the users?</label><textarea id="rf-who" rows="2"></textarea></div>
+      <div class="field"><label for="rf-goal">2 · What are they trying to do?</label><textarea id="rf-goal" rows="2"></textarea></div>
+      <div class="field"><label for="rf-obs">3 · What’s getting in their way?</label><textarea id="rf-obs" rows="2"></textarea></div>
+      <button class="btn primary" type="submit" id="rf-check">Check my reframe</button>
+    </form>
+    <ul class="checks" id="rf-results" aria-live="polite"></ul>
+    <details class="reveal" id="rf-model">
+      <summary>Show one good answer</summary>
+      <p><strong>Who:</strong> working-age residents who need a clinic appointment.<br>
+         <strong>Trying to:</strong> book a slot that fits around their working hours.<br>
+         <strong>In the way:</strong> they can only book by phone, the line is staffed 9 to 5, and those are the hours they’re at work.</p>
+      <p>Notice that a WhatsApp bot is one fix. Longer phone hours, online booking, or walk-in evening slots would also address it. The problem statement leaves those options open. The original request ruled them out.</p>
+    </details>
+  </section>
+
+  <h2>Recall it</h2>
+  <p>Without scrolling up, answer this in your head or on paper. Then check.</p>
+  <details class="reveal">
+    <summary>What are the three questions a problem statement must answer?</summary>
+    <p>Who are our users? What are they trying to do? What’s getting in their way?</p>
+  </details>
+  <details class="reveal">
+    <summary>What is the giveaway that a statement is a solution in disguise?</summary>
+    <p>It names a thing to build or buy (an app, AI, a system) before it says who is struggling and why. Often you can remove the people from the sentence and it still reads fine.</p>
+  </details>
+
+  <div class="callout">
+    <strong>Try it at work this week</strong>
+    Next time someone brings you a request phrased as a solution, ask the three questions before discussing the solution. Write down what you hear and bring it to your next session. We can turn it into a full problem statement together.
+  </div>
+
+  <div class="callout">
+    <strong>Stuck or curious? Ask your teacher.</strong>
+    Bring any follow-up question to Claude in this workspace. For example: “Is ‘we need to digitalise this form’ a solution in disguise?” or “How do I push back on my director without sounding difficult?”
+  </div>
+
+  <h2>Go to the source</h2>
+  <p><strong>Primary source:</strong> <a href="https://www.idg.gov.sg/guides-resources/ai-301-build-with-ai/productthinking1/">IDG Product Thinking, Module 1: Understanding the Problem</a>, with its short video <a href="https://youtu.be/DqGP6BvyRdk">Understanding the Problem to be Solved</a>. The full seven-module pathway is at <a href="https://www.idg.gov.sg/product-thinking/">idg.gov.sg/product-thinking</a>.</p>
+  <p><strong>Quick reference:</strong> <a href="https://claude.ai/artifact/Ge3LvtWpUUEvc4tXtdiXhR">Product thinking cheat sheet</a> (keeps growing with each lesson).</p>
+
+  <hr>
+  <nav class="nextprev" aria-label="Lessons">
+    <span>Lesson 1 of the pathway</span>
+    <a href="https://claude.ai/artifact/Bfv9dpHAEv9vc1Z45yzMaY">Lesson 2 · Start with the whys →</a>
+  </nav>
+</article>
+</main>
+
+<script>
+/* Product Thinking course — reusable lesson components.
+   Exposes window.PT = { classifyQuiz, solutionWords, findSolutionWords, reframeCheck,
+   orderChain, fourCsCheck, renderChecks }.
+   No dependencies. */
+(function () {
+  "use strict";
+
+  // Words that usually mean a statement names something to build or buy.
+  // "system" and "site" are left out: the lessons treat them as fine when they describe
+  // the obstacle or cause ("the two record systems don't share data"). Proposing one
+  // ("build a new system") is caught by SOLUTION_PHRASE instead.
+  var SOLUTION_WORDS = [
+    "app", "apps", "ai", "chatbot", "bot", "bots", "dashboard", "portal", "platform",
+    "crm", "website", "tool", "tools", "software", "superapp",
+    "automation", "automate", "cloud", "database", "api", "llm", "gpt", "whatsapp",
+    "integration", "upgrade", "migrate", "migration", "digitalise", "digitalize", "feature",
+    "features", "solution", "module"
+  ];
+  var SOLUTION_PHRASE = /\b(?:new|build|buy|implement|introduce|replace)\s+(?:(?:a|an|the|our)\s+)?(?:[a-z-]+\s+){0,2}(?:systems?|sites?)\b/g;
+
+  function findSolutionWords(text) {
+    var lower = (text || "").toLowerCase();
+    var words = lower.match(/[a-z]+/g) || [];
+    var hits = [];
+    words.forEach(function (w) {
+      if (SOLUTION_WORDS.indexOf(w) !== -1 && hits.indexOf(w) === -1) hits.push(w);
+    });
+    (lower.match(SOLUTION_PHRASE) || []).forEach(function (p) {
+      if (hits.indexOf(p) === -1) hits.push(p);
+    });
+    return hits;
+  }
+
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  /* Classification quiz.
+     mount: element. opts: { labels: [a, b], items: [{ text, answer: 0|1, why }] }
+     Labels should have the same word and character count so they give no hints. */
+  function classifyQuiz(mount, opts) {
+    var answered = 0, correct = 0;
+    var score = el("p", { class: "score", "aria-live": "polite" });
+    function updateScore() {
+      score.textContent = answered === 0
+        ? opts.items.length + " statements. Pick one label for each."
+        : correct + " of " + answered + " right so far (" + opts.items.length + " total).";
+    }
+    opts.items.forEach(function (item, i) {
+      var box = el("div", { class: "cq-item" });
+      box.appendChild(el("p", { class: "cq-stmt" }, item.text));
+      var row = el("div", { class: "cq-choices", role: "group", "aria-label": "Statement " + (i + 1) });
+      var fb = el("div", { "aria-live": "polite" });
+      var buttons = opts.labels.map(function (label, idx) {
+        var b = el("button", { type: "button", class: "btn", id: "cq-" + mount.id + "-" + i + "-" + idx }, label);
+        b.addEventListener("click", function () {
+          buttons.forEach(function (x) { x.disabled = true; });
+          b.classList.add("picked");
+          var ok = idx === item.answer;
+          answered++; if (ok) correct++;
+          fb.className = "feedback " + (ok ? "right" : "wrong");
+          fb.innerHTML = "";
+          fb.appendChild(el("b", null, (ok ? "Right. " : "Not quite. It's “" + opts.labels[item.answer] + ".” ")));
+          fb.appendChild(document.createTextNode(item.why));
+          updateScore();
+        });
+        row.appendChild(b);
+        return b;
+      });
+      box.appendChild(row);
+      box.appendChild(fb);
+      mount.appendChild(box);
+    });
+    updateScore();
+    mount.appendChild(score);
+  }
+
+  /* Reframe check: given {who, goal, obstacle} strings, return a list of
+     { ok, text } checks for instant feedback. */
+  function reframeCheck(f) {
+    var checks = [];
+    var who = (f.who || "").trim(), goal = (f.goal || "").trim(), obs = (f.obstacle || "").trim();
+    checks.push({ ok: who.split(/\s+/).length >= 2, text: "Names a specific group of people, not just “users” or “the public”." });
+    if (/^(users?|the public|everyone|citizens|people)\.?$/i.test(who)) checks[0].ok = false;
+    checks.push({ ok: goal.length >= 10, text: "Says what they are trying to get done." });
+    checks.push({ ok: obs.length >= 10, text: "Describes what gets in their way." });
+    var hits = findSolutionWords(who + " " + goal + " " + obs);
+    checks.push({
+      ok: hits.length === 0,
+      text: hits.length === 0
+        ? "Mentions no technology or product. It is a problem, not a solution."
+        : "Mentions a solution word (" + hits.join(", ") + "). Rewrite without naming what to build.",
+      hits: hits
+    });
+    checks.push({ ok: /\d/.test(who + goal + obs), text: "Bonus: includes a number (how many, how long, how often). This becomes evidence later." , bonus: true });
+    return checks;
+  }
+
+  /* Order-the-chain exercise. The learner moves cards up and down, then checks.
+     mount: element. opts: { top, bottom, correct: [strings in correct order],
+     start: [indexes into correct, the scrambled starting order], explain } */
+  function orderChain(mount, opts) {
+    var order = opts.start.slice();
+    var list = el("ol", { class: "chain" });
+    var fb = el("div", { "aria-live": "polite" });
+    var ends = el("p", { class: "chain-end" }, opts.top);
+    function render(focusIdx, dir) {
+      list.innerHTML = "";
+      order.forEach(function (ci, pos) {
+        var li = el("li", { class: "chain-item" });
+        li.appendChild(el("span", { class: "chain-text" }, opts.correct[ci]));
+        var ctr = el("span", { class: "chain-ctrls" });
+        var up = el("button", { type: "button", class: "mini", "aria-label": "Move up: " + opts.correct[ci] }, "↑");
+        var dn = el("button", { type: "button", class: "mini", "aria-label": "Move down: " + opts.correct[ci] }, "↓");
+        up.disabled = pos === 0; dn.disabled = pos === order.length - 1;
+        up.addEventListener("click", function () { swap(pos, pos - 1); render(pos - 1, "up"); });
+        dn.addEventListener("click", function () { swap(pos, pos + 1); render(pos + 1, "dn"); });
+        ctr.appendChild(up); ctr.appendChild(dn); li.appendChild(ctr);
+        list.appendChild(li);
+        if (focusIdx === pos) setTimeout(function () { (dir === "up" && !up.disabled ? up : dn.disabled ? up : dn).focus(); }, 0);
+      });
+      fb.className = ""; fb.textContent = "";
+    }
+    function swap(a, b) { var t = order[a]; order[a] = order[b]; order[b] = t; }
+    var check = el("button", { type: "button", class: "btn primary" }, "Check the order");
+    check.addEventListener("click", function () {
+      var wrong = 0;
+      order.forEach(function (ci, pos) {
+        var ok = ci === pos;
+        list.children[pos].classList.toggle("ok", ok);
+        list.children[pos].classList.toggle("bad", !ok);
+        if (!ok) wrong++;
+      });
+      fb.className = "feedback " + (wrong ? "wrong" : "right");
+      fb.innerHTML = "";
+      fb.appendChild(el("b", null, wrong ? wrong + " out of place. " : "Right. "));
+      fb.appendChild(document.createTextNode(wrong
+        ? "Read it from the top as “…why? Because…”. Each line should explain the one above it."
+        : opts.explain));
+    });
+    mount.appendChild(ends);
+    mount.appendChild(list);
+    mount.appendChild(el("p", { class: "chain-end" }, opts.bottom));
+    mount.appendChild(check);
+    mount.appendChild(fb);
+    render();
+  }
+
+  /* A Cause should give a reason, not restate the symptom. These phrases mark an explanation
+     ("because…", "was set up when…"); common words like "only" or "never" do not, since a
+     symptom such as "can only be booked by phone" uses them too. */
+  var CAUSE_MARKER = /\b(?:because|since|due to|as a result|so that|lack of|no one|nobody|(?:was|were|is|are|has been|have been)\s+(?:originally\s+|never\s+|only\s+)?(?:built|set up|designed|written|copied|made|created|set|planned|chosen|based))\b/i;
+
+  /* 4Cs draft check. f = { clarity, consequence, cause, confirmation }. */
+  function fourCsCheck(f) {
+    var get = function (k) { return (f[k] || "").trim(); };
+    var all = ["clarity", "consequence", "cause", "confirmation"].map(get).join(" ");
+    var hits = findSolutionWords(all);
+    return [
+      { ok: get("clarity").split(/\s+/).length >= 8, text: "Clarity says who is affected, what they’re trying to do and what’s broken." },
+      { ok: /\d/.test(get("clarity")), text: "Clarity shows how badly it’s broken, with a number (how long, how often or how many)." },
+      { ok: get("consequence").split(/\s+/).length >= 6, text: "Consequence says what happens if nobody solves it." },
+      { ok: CAUSE_MARKER.test(get("cause")),
+        text: "Cause gives a reason the problem exists (ideally where your Five Whys landed), not a restatement of the symptom." },
+      { ok: /\d/.test(get("confirmation")), text: "Confirmation cites evidence: a figure, a source or a count." },
+      { ok: hits.length === 0, text: hits.length === 0
+          ? "No solution has crept in. All four fields describe the problem."
+          : "A solution has crept in (" + hits.join(", ") + "). Take it out. Solutions come after the statement." }
+    ];
+  }
+
+  function renderChecks(ul, checks) {
+    ul.innerHTML = "";
+    checks.forEach(function (c) {
+      var li = el("li", null, c.text);
+      li.className = c.ok ? "pass" : (c.bonus ? "" : "fail");
+      if (!c.ok && c.bonus) li.style.paddingLeft = "1.4rem";
+      ul.appendChild(li);
+    });
+    return checks.filter(function (c) { return !c.bonus; }).every(function (c) { return c.ok; });
+  }
+
+  window.PT = { classifyQuiz: classifyQuiz, solutionWords: SOLUTION_WORDS, findSolutionWords: findSolutionWords,
+    reframeCheck: reframeCheck, orderChain: orderChain, fourCsCheck: fourCsCheck, renderChecks: renderChecks };
+})();
+</script>
+<script>
+(function () {
+  PT.classifyQuiz(document.getElementById("quiz1"), {
+    labels: ["Problem stated", "Solution named"],
+    items: [
+      { text: "We need a chatbot for the hotline.", answer: 1,
+        why: "It names a thing to build. Who is calling, what are they trying to do, and what goes wrong? None of that is here." },
+      { text: "Residents renewing a permit wait three weeks, because every application is checked by hand twice.", answer: 0,
+        why: "It names who (residents renewing a permit), the goal (a renewal), and what gets in the way (three weeks of double manual checks)." },
+      { text: "Front-desk officers re-type the same applicant details into four systems, so each walk-in takes 25 minutes.", answer: 0,
+        why: "It mentions systems, but only to describe the obstacle. It doesn't prescribe a fix. Users, goal and blocker are all there." },
+      { text: "Let's move the case management system to the cloud.", answer: 1,
+        why: "This is a migration. It might be the right call, but it doesn't say whose problem it solves." },
+      { text: "We should build a mobile app so citizens can pay their fines.", answer: 1,
+        why: "This is a tricky one. It mentions users, but the app is already decided. What stops citizens paying fines today?" },
+      { text: "Small business owners give up on the grant application at the eligibility step, because they can't tell whether they qualify.", answer: 0,
+        why: "A specific group, a clear goal, and a precise point where they get stuck. You could fix this many different ways." },
+      { text: "Our dashboard needs AI-generated insights.", answer: 1,
+        why: "This is the “we need more AI” trap. Insights for whom, to make what decision?" },
+      { text: "Duty officers miss urgent cases because new and follow-up emails look identical in the shared inbox.", answer: 0,
+        why: "It names who (duty officers), what they need (to spot urgent cases), and what gets in the way (emails that look the same)." }
+    ]
+  });
+
+  var form = document.getElementById("reframe");
+  var out = document.getElementById("rf-results");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var checks = PT.reframeCheck({
+      who: document.getElementById("rf-who").value,
+      goal: document.getElementById("rf-goal").value,
+      obstacle: document.getElementById("rf-obs").value
+    });
+    if (PT.renderChecks(out, checks)) document.getElementById("rf-model").open = true;
+  });
+})();
+</script>
