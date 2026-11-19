@@ -359,7 +359,9 @@
         if (ent) burst(ent.x, ent.y - 26, 46, "#ffcf4a");
         E.sfx("win");
         if (q.id === lastBoss) setTimeout(function () { if (!isBusy()) showCert(); }, 1600);
-        else toast("A new portal has opened at Crossroads Camp");
+        var opened = C.maps.hub.ents.filter(function (e) { return e.type === "portal" && e.needs === q.id; })[0];
+        if (opened) toast(opened.label + " has opened at Crossroads Camp");
+        else if (curMap().bonus) toast("Bonus land cleared!");
       } else if (questsLeft(curMap()) === 0) {
         toast("The boss is ready to face you");
       }
@@ -374,6 +376,7 @@
     var lines, onDone = null;
     if (state.done[lastBoss]) {
       lines = ["You’ve cleared all three lands, and look how your Whyling has grown. Here is your certificate."];
+      if (!state.done.boss4) lines.push("When you’re ready, a bonus portal has opened at the far end of camp: Skywatch Outpost. Drone requests pile up there, and its news board shows real drone headlines to practise on.");
       onDone = showCert;
     } else if (state.done.boss2) {
       lines = ["The chain is untangled. One old rule was the whole story.",
@@ -401,6 +404,8 @@
     } else if (e.type === "portal") {
       if (isLocked(e)) say("Sealed portal", ["This portal opens when you defeat " + C.quests[e.needs].speaker + "."]);
       else travel(e.to);
+    } else if (e.type === "board") {
+      openBoard();
     } else if (e.type === "sign") {
       var L = C.lessons[e.lesson];
       say("Signpost", ["This land is built on Lesson " + L.n + ": " + L.title + ". Read the full lesson any time."],
@@ -411,7 +416,103 @@
     if (e.type === "npc") return "Talk to " + e.name;
     if (e.type === "boss") return (state.done[e.quest] ? "Rematch " : "Challenge ") + C.quests[e.quest].speaker;
     if (e.type === "portal") return isLocked(e) ? e.label + " (sealed)" : "Enter " + e.label;
+    if (e.type === "board") return "Read the news board";
     return "Read the signpost";
+  }
+
+  /* ---------- news board: live drone headlines ---------- */
+  var newsCache = null, NEWS_TTL = 15 * 60 * 1000;
+  function safeHref(u) {
+    try { var p = new URL(u, location.href); return p.protocol === "https:" || p.protocol === "http:" ? p.href : null; }
+    catch (e) { return null; }
+  }
+  function newsFetch(url) {
+    var ctl = window.AbortController ? new AbortController() : null;
+    if (ctl) setTimeout(function () { ctl.abort(); }, 12000);
+    return fetch(url, ctl ? { signal: ctl.signal } : {}).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.text();
+    });
+  }
+  function parseNews(src, text, re) {
+    var out = [], now = Date.now();
+    if (src.kind === "wikipedia") {
+      var doc = new DOMParser().parseFromString(JSON.parse(text).parse.text || "", "text/html");
+      Array.prototype.forEach.call(doc.querySelectorAll(".current-events"), function (day) {
+        var m = (day.textContent || "").match(/\((\d{4}-\d{2}-\d{2})\)/), when = m ? Date.parse(m[1]) : now;
+        Array.prototype.forEach.call(day.querySelectorAll("li"), function (li) {
+          if (li.querySelector("li")) return;
+          var t = (li.textContent || "").replace(/\s+/g, " ").trim();
+          if (!re.test(t)) return;
+          var a = li.querySelector("a.external");
+          out.push({ title: t.replace(/\s*\([^)]*\)\s*$/, ""), url: a && a.getAttribute("href"), source: src.name, when: when });
+        });
+      });
+      return out;
+    }
+    var xml = new DOMParser().parseFromString(text, "application/xml");
+    if (xml.querySelector("parsererror")) throw new Error("not a feed");
+    Array.prototype.forEach.call(xml.querySelectorAll("item, entry"), function (it) {
+      var get = function (sel) { var n = it.querySelector(sel); return n ? n.textContent : ""; };
+      var title = get("title").trim(), desc = get("description") || get("summary");
+      var link = get("link").trim() || ((it.querySelector("link") || { getAttribute: function () { return ""; } }).getAttribute("href") || "");
+      if (title && re.test(title + " " + desc)) out.push({ title: title, url: link, source: src.name, when: Date.parse(get("pubDate") || get("updated")) || now });
+    });
+    return out;
+  }
+  function loadNews() {
+    if (newsCache && Date.now() - newsCache.at < NEWS_TTL) return Promise.resolve(newsCache);
+    var re = new RegExp(C.news.pattern, "i");
+    return Promise.all(C.news.sources.map(function (src) {
+      return newsFetch(src.url).then(function (text) { return parseNews(src, text, re); }, function () { return null; });
+    })).then(function (lists) {
+      var items = [], failed = 0, seen = {};
+      lists.forEach(function (l) { if (l) items = items.concat(l); else failed++; });
+      items = items.filter(function (i) { var k = i.title.toLowerCase(); if (seen[k]) return false; seen[k] = true; return true; })
+        .sort(function (a, b) { return b.when - a.when; }).slice(0, C.news.max);
+      var res = { at: Date.now(), items: items, failed: failed, total: lists.length };
+      if (failed < lists.length) newsCache = res;
+      return res;
+    });
+  }
+  function ago(ms) {
+    var h = Math.round((Date.now() - ms) / 3600000);
+    return h < 1 ? "within the hour" : h < 24 ? h + " h ago" : Math.round(h / 24) + " d ago";
+  }
+  function openBoard() {
+    if (isBusy()) return;
+    E.sfx("talk");
+    var token = { board: true };
+    run = token;
+    dlg.hidden = false; setBusy();
+    body.innerHTML = ""; run.primary = null; run.pick = null; dlg.scrollTop = 0;
+    $("dlgWho").textContent = "Skywatch news board";
+    $("dlgHearts").hidden = true; $("dlgBoss").hidden = true;
+    body.appendChild(el("p", "say", "Fetching the latest drone headlines…"));
+    primaryBtn("Close", closeDialog);
+    loadNews().then(function (res) {
+      if (run !== token) return;                     // the player closed the board meanwhile
+      body.innerHTML = ""; run.primary = null;
+      if (!res.items.length) {
+        body.appendChild(el("p", "say", res.failed === res.total
+          ? "The board can’t reach the news right now. Live headlines work when the game runs from the course site or a local server, not inside the published artifact."
+          : "No drone headlines in the latest feeds. Check back later."));
+      } else {
+        body.appendChild(el("p", "say", "Real drone headlines from the last few days. Read one, then practise on it."));
+        var ul = el("ul", "news");
+        res.items.forEach(function (n) {
+          var li = el("li"), href = n.url && safeHref(n.url);
+          if (href) { var a = el("a", null, n.title); a.href = href; a.target = "_blank"; a.rel = "noopener"; li.appendChild(a); }
+          else li.appendChild(el("span", null, n.title));
+          li.appendChild(el("small", null, " · " + n.source + " · " + ago(n.when)));
+          ul.appendChild(li);
+        });
+        body.appendChild(ul);
+        body.appendChild(el("p", "practice", C.news.practice));
+        if (res.failed) body.appendChild(el("p", "practice", res.failed + " of " + res.total + " news sources couldn’t be reached."));
+      }
+      primaryBtn("Close", closeDialog);
+    });
   }
 
   /* ---------- pet ---------- */
@@ -511,8 +612,8 @@
     box.appendChild(el("h3", null, "Companion"));
     box.appendChild(el("span", null, (st === 0 ? "Egg" : C.pet.name + ", " + C.pet.stages[st].name) + " · stage " + (st + 1) + " of " + C.pet.stages.length + " · " + state.berries + " berries"));
     b.appendChild(box);
-    ["m1", "m2", "m3"].forEach(function (id) {
-      var m = C.maps[id], L = C.lessons[m.lesson], gate = null;
+    Object.keys(C.maps).filter(function (id) { return id !== "hub"; }).forEach(function (id) {
+      var m = C.maps[id], L = m.lesson != null ? C.lessons[m.lesson] : null, gate = null;
       C.maps.hub.ents.forEach(function (e) { if (e.to === id) gate = e; });
       var locked = gate && isLocked(gate);
       box = el("div", "log-map");
@@ -523,9 +624,13 @@
         ul.appendChild(el("li", d ? "done" : (locked ? "locked" : ""), (d ? "✓ " : "• ") + C.quests[qid].title));
       });
       box.appendChild(ul);
-      var a = el("a", null, "Read Lesson " + L.n + ": " + L.title);
-      a.href = L.url; a.target = "_blank"; a.rel = "noopener";
-      box.appendChild(a);
+      if (L) {
+        var a = el("a", null, "Read Lesson " + L.n + ": " + L.title);
+        a.href = L.url; a.target = "_blank"; a.rel = "noopener";
+        box.appendChild(a);
+      } else {
+        box.appendChild(el("span", null, "Bonus land: practises Lessons 1 to 3 on drone requests."));
+      }
       b.appendChild(box);
     });
   }
@@ -573,7 +678,9 @@
     healer: { h: "#b0452f", s: "#ffd9b0", t: "#f4f2ff", p: "#8a88b0" },
     scribe: { h: "#6b4226", s: "#f0c8a0", t: "#b56bd6", p: "#3a2f5c" },
     mina: { h: "#2a2140", s: "#c98e62", t: "#ffcf4a", p: "#7a4a2a", c: "#ff7f90" },
-    rao: { h: "#2a2140", s: "#a8704a", t: "#5f7ad6", p: "#232252", c: "#232252" }
+    rao: { h: "#2a2140", s: "#a8704a", t: "#5f7ad6", p: "#232252", c: "#232252" },
+    kit: { h: "#2a2140", s: "#e8b88a", t: "#ff9f1c", p: "#33395c", c: "#ff9f1c" },
+    ines: { h: "#6b4226", s: "#c98e62", t: "#2fa39a", p: "#232252" }
   };
   var spriteCache = {};
   function charSprite(look, frame) {
@@ -623,7 +730,8 @@
     meadow: { sky: ["#7cc8ff", "#e3f6ff"], sun: "#fff3b0", cloud: "#ffffff", hill: "#86cf86", hill2: "#b4e3b0", grass: "#58b04c", grassTop: "#7ad468", dirt: "#8a5a3c", dirt2: "#74492f" },
     village: { sky: ["#6ec3f5", "#ffe9c7"], sun: "#ffe08a", cloud: "#ffffff", hill: "#9ccf7f", hill2: "#c4e3a8", grass: "#6dbb4f", grassTop: "#93d96b", dirt: "#9a673f", dirt2: "#80532f" },
     forest: { sky: ["#1f5a63", "#9fd6b4"], sun: "#eafff0", cloud: "#cfeede", hill: "#2e6b55", hill2: "#4f8f73", grass: "#3f9a55", grassTop: "#5cc070", dirt: "#5b4030", dirt2: "#4a3326" },
-    citadel: { sky: ["#33295f", "#f0a0a8"], sun: "#ffe9c7", cloud: "#c9b6e8", hill: "#5a4a8a", hill2: "#7a68aa", grass: "#8d97b8", grassTop: "#b4bcd8", dirt: "#55547a", dirt2: "#444366" }
+    citadel: { sky: ["#33295f", "#f0a0a8"], sun: "#ffe9c7", cloud: "#c9b6e8", hill: "#5a4a8a", hill2: "#7a68aa", grass: "#8d97b8", grassTop: "#b4bcd8", dirt: "#55547a", dirt2: "#444366" },
+    sky: { sky: ["#0f2747", "#f6b26b"], sun: "#ffe08a", cloud: "#9fb4d8", hill: "#3c4f6e", hill2: "#5d7193", grass: "#6f7f8f", grassTop: "#9aa8b6", dirt: "#45505e", dirt2: "#36404c" }
   };
   var decoCache = {};
   function decoFor(id) {
@@ -655,6 +763,22 @@
       rr(x + 8, GY - th + 10, 6, 10, 3, "#2a2550");
       rect(x + 21, GY - th + 2, 1, 12, "#2a2550");
       tri(x + 22, GY - th + 2, x + 31, GY - th + 5, x + 22, GY - th + 8, "#ffcf4a");
+    } else if (theme === "sky") {
+      if (k === 0) {                                   // radar mast with a sweeping dish
+        rect(x - 1, GY - 40, 2, 40, "#8a96a8");
+        var sw = Math.sin(t * 1.5 + x) * 6;
+        tri(x, GY - 42, x - 7 + sw, GY - 48, x + 7 + sw, GY - 48, "#c9d3e0");
+        circ(x, GY - 42, 1.5, Math.sin(t * 4 + x) > 0 ? "#ff7f90" : "#ffcf4a");
+      } else if (k === 1) {                            // control tower
+        var tw = 30 + v * 14;
+        rect(x - 4, GY - tw, 8, tw, "#5d6b80");
+        rr(x - 11, GY - tw - 10, 22, 10, 2, "#3c4a60");
+        rect(x - 9, GY - tw - 8, 18, 4, "#ffd98a");
+      } else {                                         // windsock
+        rect(x, GY - 26, 1.5, 26, "#c9d3e0");
+        var flap = Math.sin(t * 3 + x) * 1.5;
+        tri(x + 1.5, GY - 26, x + 14, GY - 23 + flap, x + 1.5, GY - 20, "#ff9f1c");
+      }
     } else {
       if (k === 0) return roundTree(x, v);
       if (k === 1) {
@@ -698,6 +822,16 @@
     }
     label(locked ? e.label + " · sealed" : e.label, x, y - 40, locked ? "#bdb9ea" : "#f4f2ff");
   }
+  function drawBoard(e) {
+    rect(e.x - 13, e.y - 14, 2, 14, "#5d6b80"); rect(e.x + 11, e.y - 14, 2, 14, "#5d6b80");
+    rr(e.x - 16, e.y - 32, 32, 20, 2, "#1b2a44");
+    rr(e.x - 14, e.y - 30, 28, 16, 1.5, "#0f1d33");
+    for (var i = 0; i < 3; i++) {
+      var on = Math.sin(t * 2 + i * 1.7) > -0.3;
+      rect(e.x - 11, e.y - 27 + i * 4.5, 22 - (i % 2) * 7, 1.5, on ? "#7ae0ff" : "#3c5a7a");
+    }
+    label("Drone news", e.x, e.y - 39, "#7ae0ff");
+  }
   function drawSign(e) {
     rect(e.x - 1, e.y - 16, 2, 16, "#6b4226");
     rr(e.x - 10, e.y - 26, 20, 12, 1.5, "#c99355");
@@ -731,6 +865,7 @@
     else if (asleep) ctx.globalAlpha = 0.7;
     if (q.boss === "bot") drawBot(x, y, asleep);
     else if (q.boss === "chain") drawChain(x, y, asleep);
+    else if (q.boss === "drone") drawDrone(x, y, asleep);
     else drawScroll(x, y, asleep);
     ctx.restore();
     label(asleep ? q.speaker + " · help the locals first" : q.speaker, x, y - 66, asleep ? "#bdb9ea" : "#ff7f90");
@@ -762,6 +897,22 @@
         rect(lx - 4, ly - 2, 2.5, asleep ? 1 : 3, "#ff7f90"); rect(lx + 1.5, ly - 2, 2.5, asleep ? 1 : 3, "#ff7f90");
       }
     }
+  }
+  function drawDrone(x, y, asleep) {
+    y += (asleep ? 0 : Math.sin(t * 2.4) * 3) - 22;
+    rect(x - 20, y - 3, 40, 3, "#6f7f95");                       // arms
+    [-20, 20].forEach(function (dx) {
+      rect(x + dx - 1, y - 8, 2, 6, "#6f7f95");
+      var spin = asleep ? 6 : 7 * Math.abs(Math.cos(t * 30 + dx));
+      oval(x + dx, y - 9, spin + 1, 1.4, "#c9d3e0");             // rotor
+    });
+    rr(x - 11, y - 9, 22, 13, 4, "#8fa3c8");                    // body
+    rr(x - 7, y - 6, 14, 7, 2, "#1b1a3a");
+    var eye = asleep ? "#6f83a8" : "#ff7f90";
+    rect(x - 4.5, y - 4, 3, asleep ? 1 : 3, eye); rect(x + 1.5, y - 4, 3, asleep ? 1 : 3, eye);
+    circ(x, y + 6, 3, "#3c4a60"); circ(x, y + 6, 1.4, asleep ? "#6f83a8" : "#7ae0ff"); // camera
+    rect(x - 9, y + 4, 1.5, 6, "#6f7f95"); rect(x + 7.5, y + 4, 1.5, 6, "#6f7f95");    // legs
+    if (!asleep) { ctx.globalAlpha = 0.25; oval(x, GY - 1, 14, 2, "#1b1a3a"); ctx.globalAlpha = 1; }
   }
   function drawScroll(x, y, asleep) {
     y += Math.sin(t * 1.8) * 1.2 - 2;
@@ -906,7 +1057,7 @@
   }
 
   function draw() {
-    var m = curMap(), th = THEMES[m.theme], k = scale * dpr;
+    var m = curMap(), th = THEMES[m.theme] || THEMES.meadow, k = scale * dpr;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     var g = ctx.createLinearGradient(0, 0, 0, cv.height);
     g.addColorStop(0, th.sky[0]); g.addColorStop(1, th.sky[1]);
@@ -944,6 +1095,7 @@
       else if (e.type === "sign") drawSign(e);
       else if (e.type === "npc") drawNpc(e);
       else if (e.type === "boss") drawBoss(e);
+      else if (e.type === "board") drawBoard(e);
     });
 
     drawPet();

@@ -260,18 +260,97 @@
           why: "Survey results are evidence. They confirm the consequence with real people." }
       ],
       outro: ["RUSTLE… I am blank no longer. Clarity, Consequence, Cause, Confirmation, and not one solution in sight."]
+    },
+
+    /* ---------------- Bonus: Skywatch Outpost (all three lessons, drone scenarios) ----------------
+       Invented public-sector scenarios with invented figures, in the style of the lands above.
+       Real drone news lives on the outpost's news board, never in quiz answers. */
+    q4a: {
+      title: "Drone requests", speaker: "Signaller Kit", labels: PS, recall: "standalone",
+      prompt: "A request about drones lands on your desk. Problem stated, or solution named?",
+      intro: [
+        "Drones are in the news every day, so the requests pile up here: “we need a counter-drone laser”, “we need a drone fleet”.",
+        "Same rule as Disguise Village. Who is struggling, what are they trying to do, and what is in their way? Sort my inbox."
+      ],
+      items: [
+        { text: "We need a counter-drone laser at the airport.", answer: 1,
+          why: "It names a device. Who is struggling at the airport, trying to do what, and what actually goes wrong?" },
+        { text: "Air traffic controllers stop all departures for about 40 minutes after each drone report, because they have no way to check whether the sighting is real.", answer: 0,
+          why: "It names who (controllers), what they need (to keep flights moving safely) and what blocks them (no way to check a report)." },
+        { text: "Let’s buy a fleet of drones for park patrols.", answer: 1,
+          why: "A purchase decided before anyone said what goes wrong in the parks today, or for whom." },
+        { text: "Farmers who want to spray crops by drone wait eight weeks for a permit, because a two-person team reviews every application by hand.", answer: 0,
+          why: "A specific group, a clear goal and a precise blocker. Many fixes could follow." },
+        { text: "Residents near the hospital helipad report drones overhead, but the online form asks for a registration number they can’t see from the ground.", answer: 0,
+          why: "It mentions a form, but only to describe the obstacle. Users, goal and blocker are all there." },
+        { text: "We need an AI system that spots drones on our CCTV.", answer: 1,
+          why: "The “we need more AI” trap again. Spots drones for whom, so they can decide what?" }
+      ],
+      outro: ["Inbox sorted. Controller Ines on the tower has the airport case, and it goes deeper."]
+    },
+    q4b: {
+      title: "Grounded by a sighting", speaker: "Controller Ines", labels: FIX,
+      recall: "Your team runs the airport’s own operations: its procedures, staff training, reporting forms and how it works with the police. The symptom: departures are halted several times a month after drone reports.",
+      prompt: "Should your team fix at this level?",
+      intro: [
+        "You’re on the operations team of a regional airport. You can change the airport’s procedures, staff training, reporting forms, and how the airport shares information with the police.",
+        "You can’t change national drone law, police powers, or how drones are made. The symptom: departures are halted several times a month after someone reports a drone. Should your team fix at each level?"
+      ],
+      items: [
+        { text: "Every report triggers a full halt, because the procedure has a single response level, from “might have been a bird” to “confirmed drone”.", answer: 0,
+          why: "Close to the root, and the airport owns its procedure. A good level to fix." },
+        { text: "Departures are halted about five times a month.", answer: 1,
+          why: "That is the symptom itself. Ask why it happens before choosing a fix." },
+        { text: "National rules allow hobby drones to fly five kilometres from the runway.", answer: 1,
+          why: "A real factor, but law is outside your influence. Pass the evidence to the regulator, and fix what you own." },
+        { text: "Staff who take sighting calls have no checklist of what to ask, so vague reports can’t be ruled out.", answer: 0,
+          why: "Training and checklists are yours to change, and this links straight to halts for reports that turn out to be nothing." },
+        { text: "Some drone makers don’t build in no-fly-zone limits.", answer: 1,
+          why: "Outside your sphere of influence. Changing products is for regulators and manufacturers, not an airport team." },
+        { text: "The airport and the police log sightings separately, so sharing one takes about 20 minutes.", answer: 0,
+          why: "How the airport shares information with the police is in your remit, and those 20 minutes add to every halt." }
+      ],
+      outro: ["Right level, right team. Now the Hovering Request wants a statement, and it still wants its laser."]
+    },
+    boss4: {
+      boss: "drone", title: "Boss: The Hovering Request", speaker: "The Hovering Request",
+      recall: "A team is writing a 4Cs statement about drone reports that halt departures at a regional airport.",
+      labels: ["Clarity", "Consequence", "Cause", "Confirmation", "Leave it out"],
+      prompt: "Where does this line go in the 4Cs statement?",
+      intro: [
+        "WHIRR. Your director says: “We need a counter-drone laser.” You turned that into a problem and dug for the cause. Now the team has facts.",
+        "Place each line under the right C. Careful: I will try to sneak my laser in."
+      ],
+      items: [
+        { text: "Passengers and airlines at the regional airport lose about 40 minutes per halt, and halts happen several times a month after drone reports.", answer: 0,
+          why: "Who is affected, what is broken and how badly. That is Clarity." },
+        { text: "Controllers want to keep traffic moving safely while ruling real threats in or out quickly.", answer: 0,
+          why: "What the users are trying to do is part of Clarity." },
+        { text: "If nothing changes, delays spill onto connecting flights and late arrivals, and airlines may move routes to other airports.", answer: 1,
+          why: "“If nothing changes” is the clue. This is what is at stake." },
+        { text: "The procedure has one response level for every report, and call takers have no checklist to tell a confirmed drone from a vague one.", answer: 2,
+          why: "This is where your Five Whys ended: the reason the problem exists, and one your team can act on." },
+        { text: "Operations logs show 61 halts last year, and 48 of them were never confirmed as a drone.", answer: 3,
+          why: "“Logs show” is the clue. Hard figures confirm the problem is real and significant." },
+        { text: "A counter-drone laser would let the airport bring drones down.", answer: 4,
+          why: "A solution sneaking in. The statement describes the problem and leaves the fixes open." },
+        { text: "In 12 interviews, controllers said they halt every time because they can’t judge how reliable a report is.", answer: 3,
+          why: "User research is evidence. It confirms the problem with the people who live it." }
+      ],
+      outro: ["WHIRR… landing. Clarity, Consequence, Cause, Confirmation, and no laser in sight."]
     }
   };
 
   var MAPS = {
     hub: {
-      name: "Crossroads Camp", theme: "meadow", width: 560, quests: [],
+      name: "Crossroads Camp", theme: "meadow", width: 680, quests: [],
       platforms: [{ x: 165, y: 96, w: 50 }],
       ents: [
         { type: "npc", id: "guide", name: "Guide Juno", x: 110, look: "guide" },
         { type: "portal", x: 260, to: "m1", label: "Disguise Village" },
         { type: "portal", x: 380, to: "m2", label: "Whywood Forest", needs: "boss1" },
-        { type: "portal", x: 500, to: "m3", label: "Four-C Citadel", needs: "boss2" }
+        { type: "portal", x: 500, to: "m3", label: "Four-C Citadel", needs: "boss2" },
+        { type: "portal", x: 620, to: "m4", label: "Skywatch Outpost", needs: "boss3" }
       ]
     },
     m1: {
@@ -311,7 +390,34 @@
         { type: "boss", x: 750, quest: "boss3" },
         { type: "portal", x: 825, to: "hub", label: "Crossroads Camp", needs: "boss3", hideLocked: true }
       ]
+    },
+    /* Bonus land: practises all three lessons, so it has no lesson signpost. */
+    m4: {
+      name: "Skywatch Outpost", theme: "sky", width: 860, bonus: true, quests: ["q4a", "q4b"], bossQuest: "boss4",
+      platforms: [{ x: 300, y: 94, w: 64 }, { x: 430, y: 66, w: 70 }],
+      ents: [
+        { type: "portal", x: 40, to: "hub", label: "Crossroads Camp" },
+        { type: "board", x: 110 },
+        { type: "npc", name: "Signaller Kit", x: 210, quest: "q4a", look: "kit" },
+        { type: "npc", name: "Controller Ines", x: 466, y: 66, quest: "q4b", look: "ines" },
+        { type: "boss", x: 740, quest: "boss4" },
+        { type: "portal", x: 825, to: "hub", label: "Crossroads Camp", needs: "boss4", hideLocked: true }
+      ]
     }
+  };
+
+  /* The outpost's news board: live drone headlines, fetched by game.js from sources that
+     allow browser requests (checked 2026-11-19). It degrades to a message where the page
+     can't reach them, such as inside the published artifact. */
+  var NEWS = {
+    sources: [
+      { name: "NYT World", kind: "rss", url: "https://rss.nytimes.com/services/xml/rss/nyt/World.xml" },
+      { name: "UK Ministry of Defence", kind: "rss", url: "https://www.gov.uk/government/organisations/ministry-of-defence.atom" },
+      { name: "Wikipedia Current Events", kind: "wikipedia", url: "https://en.wikipedia.org/w/api.php?action=parse&page=Portal:Current_events&prop=text&format=json&formatversion=2&origin=*" }
+    ],
+    pattern: "\\b(drones?|uavs?|uas|unmanned (aerial|aircraft|surface|underwater)|quadcopters?|fpv|loitering munitions?|shaheds?|counter-drone|anti-drone)\\b",
+    max: 6,
+    practice: "Pick one headline and ask: if your agency had to respond, what request would arrive dressed as a solution, and what problem might sit underneath it?"
   };
 
   var LEVELS = [
@@ -343,7 +449,7 @@
     }
   };
 
-  var CONTENT = { lessons: LESSONS, cheatsheet: CHEATSHEET, quests: QUESTS, maps: MAPS, levels: LEVELS, pet: PET };
+  var CONTENT = { lessons: LESSONS, cheatsheet: CHEATSHEET, quests: QUESTS, maps: MAPS, levels: LEVELS, pet: PET, news: NEWS };
   Object.keys(QUESTS).forEach(function (id) { QUESTS[id].id = id; });
 
   if (typeof module !== "undefined" && module.exports) module.exports = CONTENT;

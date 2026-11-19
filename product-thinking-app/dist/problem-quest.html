@@ -160,6 +160,8 @@ p { margin: 0; }
 .btn:disabled { opacity: 0.45; cursor: default; }
 body.touch .btn .k { display: none; }
 .practice { font-size: 13px; color: var(--muted); }
+.news { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+.news small { color: var(--muted); font-size: 12px; }
 .meters { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; align-items: center; font-size: 14px; font-weight: 700; }
 .pips { display: flex; gap: 4px; }
 .pips i { width: 20px; height: 10px; border-radius: 3px; background: var(--ink); border: 1px solid var(--line); }
@@ -599,18 +601,97 @@ body.touch .keys { display: none; }
           why: "Survey results are evidence. They confirm the consequence with real people." }
       ],
       outro: ["RUSTLE… I am blank no longer. Clarity, Consequence, Cause, Confirmation, and not one solution in sight."]
+    },
+
+    /* ---------------- Bonus: Skywatch Outpost (all three lessons, drone scenarios) ----------------
+       Invented public-sector scenarios with invented figures, in the style of the lands above.
+       Real drone news lives on the outpost's news board, never in quiz answers. */
+    q4a: {
+      title: "Drone requests", speaker: "Signaller Kit", labels: PS, recall: "standalone",
+      prompt: "A request about drones lands on your desk. Problem stated, or solution named?",
+      intro: [
+        "Drones are in the news every day, so the requests pile up here: “we need a counter-drone laser”, “we need a drone fleet”.",
+        "Same rule as Disguise Village. Who is struggling, what are they trying to do, and what is in their way? Sort my inbox."
+      ],
+      items: [
+        { text: "We need a counter-drone laser at the airport.", answer: 1,
+          why: "It names a device. Who is struggling at the airport, trying to do what, and what actually goes wrong?" },
+        { text: "Air traffic controllers stop all departures for about 40 minutes after each drone report, because they have no way to check whether the sighting is real.", answer: 0,
+          why: "It names who (controllers), what they need (to keep flights moving safely) and what blocks them (no way to check a report)." },
+        { text: "Let’s buy a fleet of drones for park patrols.", answer: 1,
+          why: "A purchase decided before anyone said what goes wrong in the parks today, or for whom." },
+        { text: "Farmers who want to spray crops by drone wait eight weeks for a permit, because a two-person team reviews every application by hand.", answer: 0,
+          why: "A specific group, a clear goal and a precise blocker. Many fixes could follow." },
+        { text: "Residents near the hospital helipad report drones overhead, but the online form asks for a registration number they can’t see from the ground.", answer: 0,
+          why: "It mentions a form, but only to describe the obstacle. Users, goal and blocker are all there." },
+        { text: "We need an AI system that spots drones on our CCTV.", answer: 1,
+          why: "The “we need more AI” trap again. Spots drones for whom, so they can decide what?" }
+      ],
+      outro: ["Inbox sorted. Controller Ines on the tower has the airport case, and it goes deeper."]
+    },
+    q4b: {
+      title: "Grounded by a sighting", speaker: "Controller Ines", labels: FIX,
+      recall: "Your team runs the airport’s own operations: its procedures, staff training, reporting forms and how it works with the police. The symptom: departures are halted several times a month after drone reports.",
+      prompt: "Should your team fix at this level?",
+      intro: [
+        "You’re on the operations team of a regional airport. You can change the airport’s procedures, staff training, reporting forms, and how the airport shares information with the police.",
+        "You can’t change national drone law, police powers, or how drones are made. The symptom: departures are halted several times a month after someone reports a drone. Should your team fix at each level?"
+      ],
+      items: [
+        { text: "Every report triggers a full halt, because the procedure has a single response level, from “might have been a bird” to “confirmed drone”.", answer: 0,
+          why: "Close to the root, and the airport owns its procedure. A good level to fix." },
+        { text: "Departures are halted about five times a month.", answer: 1,
+          why: "That is the symptom itself. Ask why it happens before choosing a fix." },
+        { text: "National rules allow hobby drones to fly five kilometres from the runway.", answer: 1,
+          why: "A real factor, but law is outside your influence. Pass the evidence to the regulator, and fix what you own." },
+        { text: "Staff who take sighting calls have no checklist of what to ask, so vague reports can’t be ruled out.", answer: 0,
+          why: "Training and checklists are yours to change, and this links straight to halts for reports that turn out to be nothing." },
+        { text: "Some drone makers don’t build in no-fly-zone limits.", answer: 1,
+          why: "Outside your sphere of influence. Changing products is for regulators and manufacturers, not an airport team." },
+        { text: "The airport and the police log sightings separately, so sharing one takes about 20 minutes.", answer: 0,
+          why: "How the airport shares information with the police is in your remit, and those 20 minutes add to every halt." }
+      ],
+      outro: ["Right level, right team. Now the Hovering Request wants a statement, and it still wants its laser."]
+    },
+    boss4: {
+      boss: "drone", title: "Boss: The Hovering Request", speaker: "The Hovering Request",
+      recall: "A team is writing a 4Cs statement about drone reports that halt departures at a regional airport.",
+      labels: ["Clarity", "Consequence", "Cause", "Confirmation", "Leave it out"],
+      prompt: "Where does this line go in the 4Cs statement?",
+      intro: [
+        "WHIRR. Your director says: “We need a counter-drone laser.” You turned that into a problem and dug for the cause. Now the team has facts.",
+        "Place each line under the right C. Careful: I will try to sneak my laser in."
+      ],
+      items: [
+        { text: "Passengers and airlines at the regional airport lose about 40 minutes per halt, and halts happen several times a month after drone reports.", answer: 0,
+          why: "Who is affected, what is broken and how badly. That is Clarity." },
+        { text: "Controllers want to keep traffic moving safely while ruling real threats in or out quickly.", answer: 0,
+          why: "What the users are trying to do is part of Clarity." },
+        { text: "If nothing changes, delays spill onto connecting flights and late arrivals, and airlines may move routes to other airports.", answer: 1,
+          why: "“If nothing changes” is the clue. This is what is at stake." },
+        { text: "The procedure has one response level for every report, and call takers have no checklist to tell a confirmed drone from a vague one.", answer: 2,
+          why: "This is where your Five Whys ended: the reason the problem exists, and one your team can act on." },
+        { text: "Operations logs show 61 halts last year, and 48 of them were never confirmed as a drone.", answer: 3,
+          why: "“Logs show” is the clue. Hard figures confirm the problem is real and significant." },
+        { text: "A counter-drone laser would let the airport bring drones down.", answer: 4,
+          why: "A solution sneaking in. The statement describes the problem and leaves the fixes open." },
+        { text: "In 12 interviews, controllers said they halt every time because they can’t judge how reliable a report is.", answer: 3,
+          why: "User research is evidence. It confirms the problem with the people who live it." }
+      ],
+      outro: ["WHIRR… landing. Clarity, Consequence, Cause, Confirmation, and no laser in sight."]
     }
   };
 
   var MAPS = {
     hub: {
-      name: "Crossroads Camp", theme: "meadow", width: 560, quests: [],
+      name: "Crossroads Camp", theme: "meadow", width: 680, quests: [],
       platforms: [{ x: 165, y: 96, w: 50 }],
       ents: [
         { type: "npc", id: "guide", name: "Guide Juno", x: 110, look: "guide" },
         { type: "portal", x: 260, to: "m1", label: "Disguise Village" },
         { type: "portal", x: 380, to: "m2", label: "Whywood Forest", needs: "boss1" },
-        { type: "portal", x: 500, to: "m3", label: "Four-C Citadel", needs: "boss2" }
+        { type: "portal", x: 500, to: "m3", label: "Four-C Citadel", needs: "boss2" },
+        { type: "portal", x: 620, to: "m4", label: "Skywatch Outpost", needs: "boss3" }
       ]
     },
     m1: {
@@ -650,7 +731,34 @@ body.touch .keys { display: none; }
         { type: "boss", x: 750, quest: "boss3" },
         { type: "portal", x: 825, to: "hub", label: "Crossroads Camp", needs: "boss3", hideLocked: true }
       ]
+    },
+    /* Bonus land: practises all three lessons, so it has no lesson signpost. */
+    m4: {
+      name: "Skywatch Outpost", theme: "sky", width: 860, bonus: true, quests: ["q4a", "q4b"], bossQuest: "boss4",
+      platforms: [{ x: 300, y: 94, w: 64 }, { x: 430, y: 66, w: 70 }],
+      ents: [
+        { type: "portal", x: 40, to: "hub", label: "Crossroads Camp" },
+        { type: "board", x: 110 },
+        { type: "npc", name: "Signaller Kit", x: 210, quest: "q4a", look: "kit" },
+        { type: "npc", name: "Controller Ines", x: 466, y: 66, quest: "q4b", look: "ines" },
+        { type: "boss", x: 740, quest: "boss4" },
+        { type: "portal", x: 825, to: "hub", label: "Crossroads Camp", needs: "boss4", hideLocked: true }
+      ]
     }
+  };
+
+  /* The outpost's news board: live drone headlines, fetched by game.js from sources that
+     allow browser requests (checked 2026-11-19). It degrades to a message where the page
+     can't reach them, such as inside the published artifact. */
+  var NEWS = {
+    sources: [
+      { name: "NYT World", kind: "rss", url: "https://rss.nytimes.com/services/xml/rss/nyt/World.xml" },
+      { name: "UK Ministry of Defence", kind: "rss", url: "https://www.gov.uk/government/organisations/ministry-of-defence.atom" },
+      { name: "Wikipedia Current Events", kind: "wikipedia", url: "https://en.wikipedia.org/w/api.php?action=parse&page=Portal:Current_events&prop=text&format=json&formatversion=2&origin=*" }
+    ],
+    pattern: "\\b(drones?|uavs?|uas|unmanned (aerial|aircraft|surface|underwater)|quadcopters?|fpv|loitering munitions?|shaheds?|counter-drone|anti-drone)\\b",
+    max: 6,
+    practice: "Pick one headline and ask: if your agency had to respond, what request would arrive dressed as a solution, and what problem might sit underneath it?"
   };
 
   var LEVELS = [
@@ -682,7 +790,7 @@ body.touch .keys { display: none; }
     }
   };
 
-  var CONTENT = { lessons: LESSONS, cheatsheet: CHEATSHEET, quests: QUESTS, maps: MAPS, levels: LEVELS, pet: PET };
+  var CONTENT = { lessons: LESSONS, cheatsheet: CHEATSHEET, quests: QUESTS, maps: MAPS, levels: LEVELS, pet: PET, news: NEWS };
   Object.keys(QUESTS).forEach(function (id) { QUESTS[id].id = id; });
 
   if (typeof module !== "undefined" && module.exports) module.exports = CONTENT;
@@ -1153,7 +1261,9 @@ window.PQ = (function () {
         if (ent) burst(ent.x, ent.y - 26, 46, "#ffcf4a");
         E.sfx("win");
         if (q.id === lastBoss) setTimeout(function () { if (!isBusy()) showCert(); }, 1600);
-        else toast("A new portal has opened at Crossroads Camp");
+        var opened = C.maps.hub.ents.filter(function (e) { return e.type === "portal" && e.needs === q.id; })[0];
+        if (opened) toast(opened.label + " has opened at Crossroads Camp");
+        else if (curMap().bonus) toast("Bonus land cleared!");
       } else if (questsLeft(curMap()) === 0) {
         toast("The boss is ready to face you");
       }
@@ -1168,6 +1278,7 @@ window.PQ = (function () {
     var lines, onDone = null;
     if (state.done[lastBoss]) {
       lines = ["You’ve cleared all three lands, and look how your Whyling has grown. Here is your certificate."];
+      if (!state.done.boss4) lines.push("When you’re ready, a bonus portal has opened at the far end of camp: Skywatch Outpost. Drone requests pile up there, and its news board shows real drone headlines to practise on.");
       onDone = showCert;
     } else if (state.done.boss2) {
       lines = ["The chain is untangled. One old rule was the whole story.",
@@ -1195,6 +1306,8 @@ window.PQ = (function () {
     } else if (e.type === "portal") {
       if (isLocked(e)) say("Sealed portal", ["This portal opens when you defeat " + C.quests[e.needs].speaker + "."]);
       else travel(e.to);
+    } else if (e.type === "board") {
+      openBoard();
     } else if (e.type === "sign") {
       var L = C.lessons[e.lesson];
       say("Signpost", ["This land is built on Lesson " + L.n + ": " + L.title + ". Read the full lesson any time."],
@@ -1205,7 +1318,103 @@ window.PQ = (function () {
     if (e.type === "npc") return "Talk to " + e.name;
     if (e.type === "boss") return (state.done[e.quest] ? "Rematch " : "Challenge ") + C.quests[e.quest].speaker;
     if (e.type === "portal") return isLocked(e) ? e.label + " (sealed)" : "Enter " + e.label;
+    if (e.type === "board") return "Read the news board";
     return "Read the signpost";
+  }
+
+  /* ---------- news board: live drone headlines ---------- */
+  var newsCache = null, NEWS_TTL = 15 * 60 * 1000;
+  function safeHref(u) {
+    try { var p = new URL(u, location.href); return p.protocol === "https:" || p.protocol === "http:" ? p.href : null; }
+    catch (e) { return null; }
+  }
+  function newsFetch(url) {
+    var ctl = window.AbortController ? new AbortController() : null;
+    if (ctl) setTimeout(function () { ctl.abort(); }, 12000);
+    return fetch(url, ctl ? { signal: ctl.signal } : {}).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.text();
+    });
+  }
+  function parseNews(src, text, re) {
+    var out = [], now = Date.now();
+    if (src.kind === "wikipedia") {
+      var doc = new DOMParser().parseFromString(JSON.parse(text).parse.text || "", "text/html");
+      Array.prototype.forEach.call(doc.querySelectorAll(".current-events"), function (day) {
+        var m = (day.textContent || "").match(/\((\d{4}-\d{2}-\d{2})\)/), when = m ? Date.parse(m[1]) : now;
+        Array.prototype.forEach.call(day.querySelectorAll("li"), function (li) {
+          if (li.querySelector("li")) return;
+          var t = (li.textContent || "").replace(/\s+/g, " ").trim();
+          if (!re.test(t)) return;
+          var a = li.querySelector("a.external");
+          out.push({ title: t.replace(/\s*\([^)]*\)\s*$/, ""), url: a && a.getAttribute("href"), source: src.name, when: when });
+        });
+      });
+      return out;
+    }
+    var xml = new DOMParser().parseFromString(text, "application/xml");
+    if (xml.querySelector("parsererror")) throw new Error("not a feed");
+    Array.prototype.forEach.call(xml.querySelectorAll("item, entry"), function (it) {
+      var get = function (sel) { var n = it.querySelector(sel); return n ? n.textContent : ""; };
+      var title = get("title").trim(), desc = get("description") || get("summary");
+      var link = get("link").trim() || ((it.querySelector("link") || { getAttribute: function () { return ""; } }).getAttribute("href") || "");
+      if (title && re.test(title + " " + desc)) out.push({ title: title, url: link, source: src.name, when: Date.parse(get("pubDate") || get("updated")) || now });
+    });
+    return out;
+  }
+  function loadNews() {
+    if (newsCache && Date.now() - newsCache.at < NEWS_TTL) return Promise.resolve(newsCache);
+    var re = new RegExp(C.news.pattern, "i");
+    return Promise.all(C.news.sources.map(function (src) {
+      return newsFetch(src.url).then(function (text) { return parseNews(src, text, re); }, function () { return null; });
+    })).then(function (lists) {
+      var items = [], failed = 0, seen = {};
+      lists.forEach(function (l) { if (l) items = items.concat(l); else failed++; });
+      items = items.filter(function (i) { var k = i.title.toLowerCase(); if (seen[k]) return false; seen[k] = true; return true; })
+        .sort(function (a, b) { return b.when - a.when; }).slice(0, C.news.max);
+      var res = { at: Date.now(), items: items, failed: failed, total: lists.length };
+      if (failed < lists.length) newsCache = res;
+      return res;
+    });
+  }
+  function ago(ms) {
+    var h = Math.round((Date.now() - ms) / 3600000);
+    return h < 1 ? "within the hour" : h < 24 ? h + " h ago" : Math.round(h / 24) + " d ago";
+  }
+  function openBoard() {
+    if (isBusy()) return;
+    E.sfx("talk");
+    var token = { board: true };
+    run = token;
+    dlg.hidden = false; setBusy();
+    body.innerHTML = ""; run.primary = null; run.pick = null; dlg.scrollTop = 0;
+    $("dlgWho").textContent = "Skywatch news board";
+    $("dlgHearts").hidden = true; $("dlgBoss").hidden = true;
+    body.appendChild(el("p", "say", "Fetching the latest drone headlines…"));
+    primaryBtn("Close", closeDialog);
+    loadNews().then(function (res) {
+      if (run !== token) return;                     // the player closed the board meanwhile
+      body.innerHTML = ""; run.primary = null;
+      if (!res.items.length) {
+        body.appendChild(el("p", "say", res.failed === res.total
+          ? "The board can’t reach the news right now. Live headlines work when the game runs from the course site or a local server, not inside the published artifact."
+          : "No drone headlines in the latest feeds. Check back later."));
+      } else {
+        body.appendChild(el("p", "say", "Real drone headlines from the last few days. Read one, then practise on it."));
+        var ul = el("ul", "news");
+        res.items.forEach(function (n) {
+          var li = el("li"), href = n.url && safeHref(n.url);
+          if (href) { var a = el("a", null, n.title); a.href = href; a.target = "_blank"; a.rel = "noopener"; li.appendChild(a); }
+          else li.appendChild(el("span", null, n.title));
+          li.appendChild(el("small", null, " · " + n.source + " · " + ago(n.when)));
+          ul.appendChild(li);
+        });
+        body.appendChild(ul);
+        body.appendChild(el("p", "practice", C.news.practice));
+        if (res.failed) body.appendChild(el("p", "practice", res.failed + " of " + res.total + " news sources couldn’t be reached."));
+      }
+      primaryBtn("Close", closeDialog);
+    });
   }
 
   /* ---------- pet ---------- */
@@ -1305,8 +1514,8 @@ window.PQ = (function () {
     box.appendChild(el("h3", null, "Companion"));
     box.appendChild(el("span", null, (st === 0 ? "Egg" : C.pet.name + ", " + C.pet.stages[st].name) + " · stage " + (st + 1) + " of " + C.pet.stages.length + " · " + state.berries + " berries"));
     b.appendChild(box);
-    ["m1", "m2", "m3"].forEach(function (id) {
-      var m = C.maps[id], L = C.lessons[m.lesson], gate = null;
+    Object.keys(C.maps).filter(function (id) { return id !== "hub"; }).forEach(function (id) {
+      var m = C.maps[id], L = m.lesson != null ? C.lessons[m.lesson] : null, gate = null;
       C.maps.hub.ents.forEach(function (e) { if (e.to === id) gate = e; });
       var locked = gate && isLocked(gate);
       box = el("div", "log-map");
@@ -1317,9 +1526,13 @@ window.PQ = (function () {
         ul.appendChild(el("li", d ? "done" : (locked ? "locked" : ""), (d ? "✓ " : "• ") + C.quests[qid].title));
       });
       box.appendChild(ul);
-      var a = el("a", null, "Read Lesson " + L.n + ": " + L.title);
-      a.href = L.url; a.target = "_blank"; a.rel = "noopener";
-      box.appendChild(a);
+      if (L) {
+        var a = el("a", null, "Read Lesson " + L.n + ": " + L.title);
+        a.href = L.url; a.target = "_blank"; a.rel = "noopener";
+        box.appendChild(a);
+      } else {
+        box.appendChild(el("span", null, "Bonus land: practises Lessons 1 to 3 on drone requests."));
+      }
       b.appendChild(box);
     });
   }
@@ -1367,7 +1580,9 @@ window.PQ = (function () {
     healer: { h: "#b0452f", s: "#ffd9b0", t: "#f4f2ff", p: "#8a88b0" },
     scribe: { h: "#6b4226", s: "#f0c8a0", t: "#b56bd6", p: "#3a2f5c" },
     mina: { h: "#2a2140", s: "#c98e62", t: "#ffcf4a", p: "#7a4a2a", c: "#ff7f90" },
-    rao: { h: "#2a2140", s: "#a8704a", t: "#5f7ad6", p: "#232252", c: "#232252" }
+    rao: { h: "#2a2140", s: "#a8704a", t: "#5f7ad6", p: "#232252", c: "#232252" },
+    kit: { h: "#2a2140", s: "#e8b88a", t: "#ff9f1c", p: "#33395c", c: "#ff9f1c" },
+    ines: { h: "#6b4226", s: "#c98e62", t: "#2fa39a", p: "#232252" }
   };
   var spriteCache = {};
   function charSprite(look, frame) {
@@ -1417,7 +1632,8 @@ window.PQ = (function () {
     meadow: { sky: ["#7cc8ff", "#e3f6ff"], sun: "#fff3b0", cloud: "#ffffff", hill: "#86cf86", hill2: "#b4e3b0", grass: "#58b04c", grassTop: "#7ad468", dirt: "#8a5a3c", dirt2: "#74492f" },
     village: { sky: ["#6ec3f5", "#ffe9c7"], sun: "#ffe08a", cloud: "#ffffff", hill: "#9ccf7f", hill2: "#c4e3a8", grass: "#6dbb4f", grassTop: "#93d96b", dirt: "#9a673f", dirt2: "#80532f" },
     forest: { sky: ["#1f5a63", "#9fd6b4"], sun: "#eafff0", cloud: "#cfeede", hill: "#2e6b55", hill2: "#4f8f73", grass: "#3f9a55", grassTop: "#5cc070", dirt: "#5b4030", dirt2: "#4a3326" },
-    citadel: { sky: ["#33295f", "#f0a0a8"], sun: "#ffe9c7", cloud: "#c9b6e8", hill: "#5a4a8a", hill2: "#7a68aa", grass: "#8d97b8", grassTop: "#b4bcd8", dirt: "#55547a", dirt2: "#444366" }
+    citadel: { sky: ["#33295f", "#f0a0a8"], sun: "#ffe9c7", cloud: "#c9b6e8", hill: "#5a4a8a", hill2: "#7a68aa", grass: "#8d97b8", grassTop: "#b4bcd8", dirt: "#55547a", dirt2: "#444366" },
+    sky: { sky: ["#0f2747", "#f6b26b"], sun: "#ffe08a", cloud: "#9fb4d8", hill: "#3c4f6e", hill2: "#5d7193", grass: "#6f7f8f", grassTop: "#9aa8b6", dirt: "#45505e", dirt2: "#36404c" }
   };
   var decoCache = {};
   function decoFor(id) {
@@ -1449,6 +1665,22 @@ window.PQ = (function () {
       rr(x + 8, GY - th + 10, 6, 10, 3, "#2a2550");
       rect(x + 21, GY - th + 2, 1, 12, "#2a2550");
       tri(x + 22, GY - th + 2, x + 31, GY - th + 5, x + 22, GY - th + 8, "#ffcf4a");
+    } else if (theme === "sky") {
+      if (k === 0) {                                   // radar mast with a sweeping dish
+        rect(x - 1, GY - 40, 2, 40, "#8a96a8");
+        var sw = Math.sin(t * 1.5 + x) * 6;
+        tri(x, GY - 42, x - 7 + sw, GY - 48, x + 7 + sw, GY - 48, "#c9d3e0");
+        circ(x, GY - 42, 1.5, Math.sin(t * 4 + x) > 0 ? "#ff7f90" : "#ffcf4a");
+      } else if (k === 1) {                            // control tower
+        var tw = 30 + v * 14;
+        rect(x - 4, GY - tw, 8, tw, "#5d6b80");
+        rr(x - 11, GY - tw - 10, 22, 10, 2, "#3c4a60");
+        rect(x - 9, GY - tw - 8, 18, 4, "#ffd98a");
+      } else {                                         // windsock
+        rect(x, GY - 26, 1.5, 26, "#c9d3e0");
+        var flap = Math.sin(t * 3 + x) * 1.5;
+        tri(x + 1.5, GY - 26, x + 14, GY - 23 + flap, x + 1.5, GY - 20, "#ff9f1c");
+      }
     } else {
       if (k === 0) return roundTree(x, v);
       if (k === 1) {
@@ -1492,6 +1724,16 @@ window.PQ = (function () {
     }
     label(locked ? e.label + " · sealed" : e.label, x, y - 40, locked ? "#bdb9ea" : "#f4f2ff");
   }
+  function drawBoard(e) {
+    rect(e.x - 13, e.y - 14, 2, 14, "#5d6b80"); rect(e.x + 11, e.y - 14, 2, 14, "#5d6b80");
+    rr(e.x - 16, e.y - 32, 32, 20, 2, "#1b2a44");
+    rr(e.x - 14, e.y - 30, 28, 16, 1.5, "#0f1d33");
+    for (var i = 0; i < 3; i++) {
+      var on = Math.sin(t * 2 + i * 1.7) > -0.3;
+      rect(e.x - 11, e.y - 27 + i * 4.5, 22 - (i % 2) * 7, 1.5, on ? "#7ae0ff" : "#3c5a7a");
+    }
+    label("Drone news", e.x, e.y - 39, "#7ae0ff");
+  }
   function drawSign(e) {
     rect(e.x - 1, e.y - 16, 2, 16, "#6b4226");
     rr(e.x - 10, e.y - 26, 20, 12, 1.5, "#c99355");
@@ -1525,6 +1767,7 @@ window.PQ = (function () {
     else if (asleep) ctx.globalAlpha = 0.7;
     if (q.boss === "bot") drawBot(x, y, asleep);
     else if (q.boss === "chain") drawChain(x, y, asleep);
+    else if (q.boss === "drone") drawDrone(x, y, asleep);
     else drawScroll(x, y, asleep);
     ctx.restore();
     label(asleep ? q.speaker + " · help the locals first" : q.speaker, x, y - 66, asleep ? "#bdb9ea" : "#ff7f90");
@@ -1556,6 +1799,22 @@ window.PQ = (function () {
         rect(lx - 4, ly - 2, 2.5, asleep ? 1 : 3, "#ff7f90"); rect(lx + 1.5, ly - 2, 2.5, asleep ? 1 : 3, "#ff7f90");
       }
     }
+  }
+  function drawDrone(x, y, asleep) {
+    y += (asleep ? 0 : Math.sin(t * 2.4) * 3) - 22;
+    rect(x - 20, y - 3, 40, 3, "#6f7f95");                       // arms
+    [-20, 20].forEach(function (dx) {
+      rect(x + dx - 1, y - 8, 2, 6, "#6f7f95");
+      var spin = asleep ? 6 : 7 * Math.abs(Math.cos(t * 30 + dx));
+      oval(x + dx, y - 9, spin + 1, 1.4, "#c9d3e0");             // rotor
+    });
+    rr(x - 11, y - 9, 22, 13, 4, "#8fa3c8");                    // body
+    rr(x - 7, y - 6, 14, 7, 2, "#1b1a3a");
+    var eye = asleep ? "#6f83a8" : "#ff7f90";
+    rect(x - 4.5, y - 4, 3, asleep ? 1 : 3, eye); rect(x + 1.5, y - 4, 3, asleep ? 1 : 3, eye);
+    circ(x, y + 6, 3, "#3c4a60"); circ(x, y + 6, 1.4, asleep ? "#6f83a8" : "#7ae0ff"); // camera
+    rect(x - 9, y + 4, 1.5, 6, "#6f7f95"); rect(x + 7.5, y + 4, 1.5, 6, "#6f7f95");    // legs
+    if (!asleep) { ctx.globalAlpha = 0.25; oval(x, GY - 1, 14, 2, "#1b1a3a"); ctx.globalAlpha = 1; }
   }
   function drawScroll(x, y, asleep) {
     y += Math.sin(t * 1.8) * 1.2 - 2;
@@ -1700,7 +1959,7 @@ window.PQ = (function () {
   }
 
   function draw() {
-    var m = curMap(), th = THEMES[m.theme], k = scale * dpr;
+    var m = curMap(), th = THEMES[m.theme] || THEMES.meadow, k = scale * dpr;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     var g = ctx.createLinearGradient(0, 0, 0, cv.height);
     g.addColorStop(0, th.sky[0]); g.addColorStop(1, th.sky[1]);
@@ -1738,6 +1997,7 @@ window.PQ = (function () {
       else if (e.type === "sign") drawSign(e);
       else if (e.type === "npc") drawNpc(e);
       else if (e.type === "boss") drawBoss(e);
+      else if (e.type === "board") drawBoard(e);
     });
 
     drawPet();
